@@ -1,0 +1,6 @@
+package exam;
+
+simple Teacher
+{
+    
+}
