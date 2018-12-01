@@ -19,12 +19,13 @@
 
 
 /**
- * Class generated from <tt>Student.msg:1</tt> by nedtool.
+ * Class generated from <tt>Student.msg:2</tt> by nedtool.
  * <pre>
  * packet Student
  * {
- *     simtime_t totalAnswerTime;
- *     int questionNumber;
+ *     simtime_t totalAnswerTime;		//examination time
+ *     int answersNumber;				//number of given answers
+ *     double currentAnswerTime;		//time to answer the current question
  * }
  * </pre>
  */
@@ -32,7 +33,8 @@ class Student : public ::omnetpp::cPacket
 {
   protected:
     ::omnetpp::simtime_t totalAnswerTime;
-    int questionNumber;
+    int answersNumber;
+    double currentAnswerTime;
 
   private:
     void copy(const Student& other);
@@ -53,8 +55,10 @@ class Student : public ::omnetpp::cPacket
     // field getter/setter methods
     virtual ::omnetpp::simtime_t getTotalAnswerTime() const;
     virtual void setTotalAnswerTime(::omnetpp::simtime_t totalAnswerTime);
-    virtual int getQuestionNumber() const;
-    virtual void setQuestionNumber(int questionNumber);
+    virtual int getAnswersNumber() const;
+    virtual void setAnswersNumber(int answersNumber);
+    virtual double getCurrentAnswerTime() const;
+    virtual void setCurrentAnswerTime(double currentAnswerTime);
 };
 
 inline void doParsimPacking(omnetpp::cCommBuffer *b, const Student& obj) {obj.parsimPack(b);}

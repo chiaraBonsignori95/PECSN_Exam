@@ -182,7 +182,8 @@ Register_Class(Student)
 Student::Student(const char *name, short kind) : ::omnetpp::cPacket(name,kind)
 {
     this->totalAnswerTime = 0;
-    this->questionNumber = 0;
+    this->answersNumber = 0;
+    this->currentAnswerTime = 0;
 }
 
 Student::Student(const Student& other) : ::omnetpp::cPacket(other)
@@ -205,21 +206,24 @@ Student& Student::operator=(const Student& other)
 void Student::copy(const Student& other)
 {
     this->totalAnswerTime = other.totalAnswerTime;
-    this->questionNumber = other.questionNumber;
+    this->answersNumber = other.answersNumber;
+    this->currentAnswerTime = other.currentAnswerTime;
 }
 
 void Student::parsimPack(omnetpp::cCommBuffer *b) const
 {
     ::omnetpp::cPacket::parsimPack(b);
     doParsimPacking(b,this->totalAnswerTime);
-    doParsimPacking(b,this->questionNumber);
+    doParsimPacking(b,this->answersNumber);
+    doParsimPacking(b,this->currentAnswerTime);
 }
 
 void Student::parsimUnpack(omnetpp::cCommBuffer *b)
 {
     ::omnetpp::cPacket::parsimUnpack(b);
     doParsimUnpacking(b,this->totalAnswerTime);
-    doParsimUnpacking(b,this->questionNumber);
+    doParsimUnpacking(b,this->answersNumber);
+    doParsimUnpacking(b,this->currentAnswerTime);
 }
 
 ::omnetpp::simtime_t Student::getTotalAnswerTime() const
@@ -232,14 +236,24 @@ void Student::setTotalAnswerTime(::omnetpp::simtime_t totalAnswerTime)
     this->totalAnswerTime = totalAnswerTime;
 }
 
-int Student::getQuestionNumber() const
+int Student::getAnswersNumber() const
 {
-    return this->questionNumber;
+    return this->answersNumber;
 }
 
-void Student::setQuestionNumber(int questionNumber)
+void Student::setAnswersNumber(int answersNumber)
 {
-    this->questionNumber = questionNumber;
+    this->answersNumber = answersNumber;
+}
+
+double Student::getCurrentAnswerTime() const
+{
+    return this->currentAnswerTime;
+}
+
+void Student::setCurrentAnswerTime(double currentAnswerTime)
+{
+    this->currentAnswerTime = currentAnswerTime;
 }
 
 class StudentDescriptor : public omnetpp::cClassDescriptor
@@ -307,7 +321,7 @@ const char *StudentDescriptor::getProperty(const char *propertyname) const
 int StudentDescriptor::getFieldCount() const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 2+basedesc->getFieldCount() : 2;
+    return basedesc ? 3+basedesc->getFieldCount() : 3;
 }
 
 unsigned int StudentDescriptor::getFieldTypeFlags(int field) const
@@ -321,8 +335,9 @@ unsigned int StudentDescriptor::getFieldTypeFlags(int field) const
     static unsigned int fieldTypeFlags[] = {
         FD_ISEDITABLE,
         FD_ISEDITABLE,
+        FD_ISEDITABLE,
     };
-    return (field>=0 && field<2) ? fieldTypeFlags[field] : 0;
+    return (field>=0 && field<3) ? fieldTypeFlags[field] : 0;
 }
 
 const char *StudentDescriptor::getFieldName(int field) const
@@ -335,9 +350,10 @@ const char *StudentDescriptor::getFieldName(int field) const
     }
     static const char *fieldNames[] = {
         "totalAnswerTime",
-        "questionNumber",
+        "answersNumber",
+        "currentAnswerTime",
     };
-    return (field>=0 && field<2) ? fieldNames[field] : nullptr;
+    return (field>=0 && field<3) ? fieldNames[field] : nullptr;
 }
 
 int StudentDescriptor::findField(const char *fieldName) const
@@ -345,7 +361,8 @@ int StudentDescriptor::findField(const char *fieldName) const
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     int base = basedesc ? basedesc->getFieldCount() : 0;
     if (fieldName[0]=='t' && strcmp(fieldName, "totalAnswerTime")==0) return base+0;
-    if (fieldName[0]=='q' && strcmp(fieldName, "questionNumber")==0) return base+1;
+    if (fieldName[0]=='a' && strcmp(fieldName, "answersNumber")==0) return base+1;
+    if (fieldName[0]=='c' && strcmp(fieldName, "currentAnswerTime")==0) return base+2;
     return basedesc ? basedesc->findField(fieldName) : -1;
 }
 
@@ -360,8 +377,9 @@ const char *StudentDescriptor::getFieldTypeString(int field) const
     static const char *fieldTypeStrings[] = {
         "simtime_t",
         "int",
+        "double",
     };
-    return (field>=0 && field<2) ? fieldTypeStrings[field] : nullptr;
+    return (field>=0 && field<3) ? fieldTypeStrings[field] : nullptr;
 }
 
 const char **StudentDescriptor::getFieldPropertyNames(int field) const
@@ -429,7 +447,8 @@ std::string StudentDescriptor::getFieldValueAsString(void *object, int field, in
     Student *pp = (Student *)object; (void)pp;
     switch (field) {
         case 0: return simtime2string(pp->getTotalAnswerTime());
-        case 1: return long2string(pp->getQuestionNumber());
+        case 1: return long2string(pp->getAnswersNumber());
+        case 2: return double2string(pp->getCurrentAnswerTime());
         default: return "";
     }
 }
@@ -445,7 +464,8 @@ bool StudentDescriptor::setFieldValueAsString(void *object, int field, int i, co
     Student *pp = (Student *)object; (void)pp;
     switch (field) {
         case 0: pp->setTotalAnswerTime(string2simtime(value)); return true;
-        case 1: pp->setQuestionNumber(string2long(value)); return true;
+        case 1: pp->setAnswersNumber(string2long(value)); return true;
+        case 2: pp->setCurrentAnswerTime(string2double(value)); return true;
         default: return false;
     }
 }

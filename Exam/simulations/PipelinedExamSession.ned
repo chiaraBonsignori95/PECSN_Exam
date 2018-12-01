@@ -5,7 +5,7 @@ network PipelinedExamSession
 {
     parameters:
         int teachersNumber;
-        bool uniformDistribution;
+        string answerTimeDistribution;
   
     submodules:
     	teacher[teachersNumber]: CommunicatingTeacher;
