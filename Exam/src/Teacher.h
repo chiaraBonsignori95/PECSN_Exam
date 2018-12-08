@@ -22,8 +22,12 @@ class Teacher : public cSimpleModule
 
     protected:
         Student* student;
+        simsignal_t examFinishedSignal;
+        simsignal_t studentExaminedSignal;
         int getTotalQuestionsNumber();
         const char* getDistribution();
+        int getMinUniform();
+        int getMaxUniform();
         bool isUniform(const char* distribution);
         bool isLognormal(const char* distribution);
         void askQuestion();

@@ -3,9 +3,11 @@ import exam.*;
 
 network ParallelExamSession
 {
-    parameters:
+    parameters:       
         int teachersNumber;
         string answerTimeDistribution;
+        int minUniform;
+        int maxUniform;
   
     submodules:
 		teacher[teachersNumber]: Teacher;       

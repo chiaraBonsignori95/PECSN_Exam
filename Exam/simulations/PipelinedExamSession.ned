@@ -6,6 +6,8 @@ network PipelinedExamSession
     parameters:
         int teachersNumber;
         string answerTimeDistribution;
+        int minUniform;
+        int maxUniform;
   
     submodules:
     	teacher[teachersNumber]: CommunicatingTeacher;

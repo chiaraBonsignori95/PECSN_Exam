@@ -28,7 +28,7 @@ void Teacher::clearStudent()
 */
 int Teacher::getTotalQuestionsNumber()
 {
-    return getParentModule()->par("teachersNumber").intValue() - 1;
+    return getParentModule()->par("teachersNumber").intValue();
 }
 
 
@@ -38,6 +38,24 @@ int Teacher::getTotalQuestionsNumber()
 const char* Teacher::getDistribution()
 {
     return getParentModule()->par("answerTimeDistribution").stringValue();
+}
+
+
+/*
+Returns the minimun value for the uniform distribution
+*/
+int Teacher::getMinUniform()
+{
+   return getParentModule()->par("minUniform").intValue();
+}
+
+
+/*
+Returns the maximum value for the uniform distribution
+*/
+int Teacher::getMaxUniform()
+{
+   return getParentModule()->par("maxUniform").intValue();
 }
 
 
@@ -65,12 +83,13 @@ bool Teacher::isLognormal(const char* distribution)
 */
 void Teacher::askQuestion()
 {
-    double answerTime;
+    double answerTime = 0.0;
     if(isUniform(getDistribution()))
-        answerTime = uniform(0, 3);
+        answerTime = uniform(getMinUniform(), getMaxUniform());
     else if(isLognormal(getDistribution()))
         answerTime = lognormal(0, 3);
     student->setCurrentAnswerTime(answerTime);
+
     scheduleAt(simTime() + answerTime, student);
 
     //DEBUG
@@ -112,6 +131,8 @@ void Teacher::newStudent()
 */
 void Teacher::initialize()
 {
+    examFinishedSignal = registerSignal("examFinished");
+    studentExaminedSignal = registerSignal("studentExamined");
     newStudent();
     askQuestion();
 }
@@ -126,9 +147,16 @@ void Teacher::handleMessage(cMessage *msg)
     if(msg->isSelfMessage())
     {
        updateStudentState(msg);
-       askQuestion();
 
        if(examFinished(student->getAnswersNumber()))
+       {
+           Student *s = check_and_cast<Student*>(msg);
+           emit(examFinishedSignal, s->getTotalAnswerTime());
+           emit(studentExaminedSignal, 1);
            clearStudent();
+           EV << "Collect statistics" << endl;
+       }
+
+       askQuestion();
     }
 }

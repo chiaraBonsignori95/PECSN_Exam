@@ -27,6 +27,7 @@ class CommunicatingTeacher : public Teacher
         void handleNewStudent();
         virtual void initialize();
         virtual void handleMessage(cMessage *msg);
+        virtual void finish();
 
     public:
         CommunicatingTeacher() {busy = false;};

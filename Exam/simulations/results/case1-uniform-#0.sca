@@ -1,0 +1,62 @@
+version 2
+run case1-0-20181208-16:36:50-4628
+attr configname case1
+attr datetime 20181208-16:36:50
+attr experiment case1
+attr inifile omnetpp.ini
+attr iterationvars "$0=\"uniform\""
+attr iterationvarsf uniform-
+attr measurement "$0=\"uniform\""
+attr network ParallelExamSession
+attr processid 4628
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param **.teachersNumber 20
+param **.answerTimeDistribution "\"uniform\""
+param **.minUniform 300
+param **.maxUniform 1800
+
+scalar ParallelExamSession.teacher[0] studentsExaminedNumber:sum 85
+attr source studentExamined
+scalar ParallelExamSession.teacher[1] studentsExaminedNumber:sum 87
+attr source studentExamined
+scalar ParallelExamSession.teacher[2] studentsExaminedNumber:sum 84
+attr source studentExamined
+scalar ParallelExamSession.teacher[3] studentsExaminedNumber:sum 87
+attr source studentExamined
+scalar ParallelExamSession.teacher[4] studentsExaminedNumber:sum 85
+attr source studentExamined
+scalar ParallelExamSession.teacher[5] studentsExaminedNumber:sum 86
+attr source studentExamined
+scalar ParallelExamSession.teacher[6] studentsExaminedNumber:sum 86
+attr source studentExamined
+scalar ParallelExamSession.teacher[7] studentsExaminedNumber:sum 86
+attr source studentExamined
+scalar ParallelExamSession.teacher[8] studentsExaminedNumber:sum 86
+attr source studentExamined
+scalar ParallelExamSession.teacher[9] studentsExaminedNumber:sum 85
+attr source studentExamined
+scalar ParallelExamSession.teacher[10] studentsExaminedNumber:sum 86
+attr source studentExamined
+scalar ParallelExamSession.teacher[11] studentsExaminedNumber:sum 85
+attr source studentExamined
+scalar ParallelExamSession.teacher[12] studentsExaminedNumber:sum 86
+attr source studentExamined
+scalar ParallelExamSession.teacher[13] studentsExaminedNumber:sum 85
+attr source studentExamined
+scalar ParallelExamSession.teacher[14] studentsExaminedNumber:sum 86
+attr source studentExamined
+scalar ParallelExamSession.teacher[15] studentsExaminedNumber:sum 86
+attr source studentExamined
+scalar ParallelExamSession.teacher[16] studentsExaminedNumber:sum 85
+attr source studentExamined
+scalar ParallelExamSession.teacher[17] studentsExaminedNumber:sum 86
+attr source studentExamined
+scalar ParallelExamSession.teacher[18] studentsExaminedNumber:sum 86
+attr source studentExamined
+scalar ParallelExamSession.teacher[19] studentsExaminedNumber:sum 84
+attr source studentExamined
+
