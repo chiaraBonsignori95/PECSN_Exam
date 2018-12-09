@@ -3,7 +3,7 @@
 Define_Module(Teacher);
 
 /*
- questionNumber represents the n-th question asked by the teacher
+ questionNumber represents the i-th question asked by the teacher
  This function checks if a student answered to all questions
 */
 bool Teacher::examFinished(int questionNumber)
@@ -24,15 +24,6 @@ void Teacher::clearStudent()
 
 
 /*
- Returns the value of the network parameter teachersNumber
-*/
-int Teacher::getTotalQuestionsNumber()
-{
-    return getParentModule()->par("teachersNumber").intValue();
-}
-
-
-/*
  Returns the value of the network parameter answerTimeDistribution
 */
 const char* Teacher::getDistribution()
@@ -42,7 +33,16 @@ const char* Teacher::getDistribution()
 
 
 /*
-Returns the minimun value for the uniform distribution
+ Checks if the used answer time distribution is uniform
+*/
+bool Teacher::isUniform(const char* distribution)
+{
+    return strcmp(distribution, "uniform") == 0;
+}
+
+
+/*
+Returns the minimum value for the uniform distribution
 */
 int Teacher::getMinUniform()
 {
@@ -60,20 +60,42 @@ int Teacher::getMaxUniform()
 
 
 /*
- Checks if the used answer time distribution is uniform
-*/
-bool Teacher::isUniform(const char* distribution)
-{
-    return strcmp(distribution, "uniform") == 0;
-}
-
-
-/*
  Checks if the used answer time distribution is lognormal
 */
 bool Teacher::isLognormal(const char* distribution)
 {
     return strcmp(distribution, "lognormal") == 0;
+}
+
+
+/*
+ Registers signals for statistics
+ */
+void Teacher::registerSignals()
+{
+    examFinishedSignal = registerSignal("examFinished");
+    studentExaminedSignal = registerSignal("studentExamined");
+}
+
+
+/*
+ Returns the value of the network parameter teachersNumber
+*/
+int Teacher::getTotalQuestionsNumber()
+{
+    return getParentModule()->par("teachersNumber").intValue();
+}
+
+
+/*
+ Creates a new student
+*/
+void Teacher::newStudent()
+{
+    student = new Student("Student");
+    //DEBUG
+    EV << "New student number " << student->getId() << endl;
+    //DEBUG
 }
 
 
@@ -89,7 +111,7 @@ void Teacher::askQuestion()
     else if(isLognormal(getDistribution()))
         answerTime = lognormal(0, 3);
     student->setCurrentAnswerTime(answerTime);
-
+    //answerTime = 1; // debugging statistics
     scheduleAt(simTime() + answerTime, student);
 
     //DEBUG
@@ -115,24 +137,11 @@ void Teacher::updateStudentState(cMessage *msg)
 
 
 /*
- Creates a new student
-*/
-void Teacher::newStudent()
-{
-    student = new Student("Student");
-    //DEBUG
-    EV << "New student number " << student->getId() << endl;
-    //DEBUG
-}
-
-
-/*
  Creates new students and questions for all the teachers
 */
 void Teacher::initialize()
 {
-    examFinishedSignal = registerSignal("examFinished");
-    studentExaminedSignal = registerSignal("studentExamined");
+    registerSignals();
     newStudent();
     askQuestion();
 }
