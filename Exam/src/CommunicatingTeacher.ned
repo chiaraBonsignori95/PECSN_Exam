@@ -1,9 +1,10 @@
 package exam;
 
 simple CommunicatingTeacher extends Teacher
-{
-    @class(CommunicatingTeacher);
-    
+{    
+    parameters:
+        @class(CommunicatingTeacher); 
+        
     gates:
         input previousTeacher @loose;
         output nextTeacher @loose;

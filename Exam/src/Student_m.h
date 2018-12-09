@@ -24,6 +24,10 @@
  * packet Student
  * {
  *     simtime_t totalAnswerTime;		//examination time
+ * 
+ *     simtime_t waitingTimeTotal;
+ *     simtime_t waitingTimeStart;
+ * 
  *     int answersNumber;				//number of given answers
  *     double currentAnswerTime;		//time to answer the current question
  * }
@@ -33,6 +37,8 @@ class Student : public ::omnetpp::cPacket
 {
   protected:
     ::omnetpp::simtime_t totalAnswerTime;
+    ::omnetpp::simtime_t waitingTimeTotal;
+    ::omnetpp::simtime_t waitingTimeStart;
     int answersNumber;
     double currentAnswerTime;
 
@@ -55,6 +61,10 @@ class Student : public ::omnetpp::cPacket
     // field getter/setter methods
     virtual ::omnetpp::simtime_t getTotalAnswerTime() const;
     virtual void setTotalAnswerTime(::omnetpp::simtime_t totalAnswerTime);
+    virtual ::omnetpp::simtime_t getWaitingTimeTotal() const;
+    virtual void setWaitingTimeTotal(::omnetpp::simtime_t waitingTimeTotal);
+    virtual ::omnetpp::simtime_t getWaitingTimeStart() const;
+    virtual void setWaitingTimeStart(::omnetpp::simtime_t waitingTimeStart);
     virtual int getAnswersNumber() const;
     virtual void setAnswersNumber(int answersNumber);
     virtual double getCurrentAnswerTime() const;

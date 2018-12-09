@@ -24,18 +24,18 @@ class Teacher : public cSimpleModule
         Student* student;
         simsignal_t examFinishedSignal;
         simsignal_t studentExaminedSignal;
-        int getTotalQuestionsNumber();
         const char* getDistribution();
+        bool isUniform(const char* distribution);
         int getMinUniform();
         int getMaxUniform();
-        bool isUniform(const char* distribution);
         bool isLognormal(const char* distribution);
+        void registerSignals();
+        int getTotalQuestionsNumber();
+        void newStudent();
         void askQuestion();
         void updateStudentState(cMessage *student);
-        void newStudent();
         virtual void initialize();
         virtual void handleMessage(cMessage* msg);
-
 };
 
 #endif

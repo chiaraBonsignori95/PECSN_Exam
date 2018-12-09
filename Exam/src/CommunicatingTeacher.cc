@@ -21,39 +21,120 @@ bool CommunicatingTeacher::lastTeacher()
 
 
 /*
- Checks if there are any students that are waiting to be examined
-*/
-void CommunicatingTeacher::handleNewStudent()
+ Handles the response of the student
+ */
+void CommunicatingTeacher::handleStudentResponse(cMessage *msg)
 {
-    if(firstTeacher())                              //the first teacher must create the new student
-        newStudent();
-    else if(!waitingStudents.empty())      //the others teachers, if available, must verify if there are any students waiting to be examined
-    {
-        student = check_and_cast<Student*>(waitingStudents.front());    //get the reference to the oldest student
-        waitingStudents.pop();                                          //delete the oldest student
-    }
-
-    askQuestion();
-    busy = true;
-}
-
-
-/*
- It is used only by the first teacher
-*/
-void CommunicatingTeacher::initialize()
-{
+    updateStudentState(msg);
+    busy = false;                       //the teacher is free and available to ask a new question to another student
+    idleTimeStart = simTime();          //the starting time of the idle period is set in any case, this value will be used
+                                        //in the handleNewStudent only when a new student arrives in the empty queue
     if(firstTeacher())
     {
-        Teacher::initialize();
+        if(!lastTeacher())              //handle the case in which there is only 1 teacher
+            send(msg, "nextTeacher");   //all the teachers (except the last one) send the student to the next teacher
+        newStudent();
+        askQuestion();
+        busy = true;
+    }
+
+    if(lastTeacher())
+    {
+        Student *s = check_and_cast<Student*>(msg);
+        emit(examFinishedSignal, s->getTotalAnswerTime());
+        emit(studentExaminedSignal, 1);
+        emit(studentWaitingTime, s->getWaitingTimeTotal());
+        delete msg;                     //the student leaves the system
+    }
+
+    if(!firstTeacher() && !lastTeacher())
+        send(msg, "nextTeacher");
+
+    if(!waitingStudents.isEmpty())
+    {
+        student = check_and_cast<Student*>(waitingStudents.pop());
+        simtime_t currentWaitingTime = student->getWaitingTimeTotal() + simTime() -  student->getWaitingTimeStart();
+        student->setWaitingTimeTotal(currentWaitingTime);
+        EV << student->getWaitingTimeTotal() << endl;
+        askQuestion();
         busy = true;
     }
 }
 
 
 /*
-
+ Handles a new student to examine
 */
+void CommunicatingTeacher::handleNewStudent(cMessage *msg)
+{
+    Student *s = check_and_cast<Student*>(msg);
+    s->setWaitingTimeStart(simTime());
+    waitingStudents.insert(s);                  //if it isn't a selfMessage, it's for sure a student coming from the previous teacher
+                                                //the student will be insert into the teacher's waiting queue and he will be scheduled
+                                                //by handleNewStudent() function
+    if(!busy)
+    {
+        student = check_and_cast<Student*>(waitingStudents.pop());    //get the reference to the oldest student
+        askQuestion();
+        busy = true;
+        if(isFirstStudentSeen)
+            idleTimeTotal += simTime() - idleTimeStart;
+    }
+    isFirstStudentSeen = true;
+}
+
+
+/*
+ Registers signals for statistics
+ */
+void CommunicatingTeacher::registerSignals()
+{
+    Teacher::registerSignals();
+    idleTime = registerSignal("idleTimeInterval");
+    studentWaitingTime = registerSignal("waitingTimeInterval");
+}
+
+
+/*
+ It is used only by the first and the last teachers
+*/
+void CommunicatingTeacher::initialize()
+{
+    if(firstTeacher())
+    {
+        isFirstStudentSeen = true;
+        newStudent();
+        askQuestion();
+        busy = true;
+    }
+
+    registerSignals();
+}
+
+
+void CommunicatingTeacher::handleMessage(cMessage *msg)
+{
+    if(msg->isSelfMessage())                //a selfMessage is always a student's answer
+        handleStudentResponse(msg);
+    else
+        handleNewStudent(msg);
+}
+
+
+/*
+ Clears the queue of students to avoid memory leak
+ */
+void CommunicatingTeacher::finish()
+{
+    waitingStudents.clear();
+    emit(idleTime, idleTimeTotal);
+}
+
+
+/*
+ * Another possible body oh the handleMessage function
+ *
+ *
 void CommunicatingTeacher::handleMessage(cMessage *msg)
 {
     if(msg->isSelfMessage())            //a selfMessage is always a student's answer
@@ -70,15 +151,14 @@ void CommunicatingTeacher::handleMessage(cMessage *msg)
         {
             EV << "I'm last teacher" << endl;
             Student *s = check_and_cast<Student*>(msg);
-            //emit(examFinishedSignal, s->getTotalAnswerTime());
-            //emit(studentExaminedSignal, 1);
+            emit(examFinishedSignal, s->getTotalAnswerTime());
+            emit(studentExaminedSignal, 1);
             delete msg;                 //the student leaves the system
         }
 
-        if(!firstTeacher() && !waitingStudents.empty())
+        if(!firstTeacher() && !waitingStudents.isEmpty())
         {
-            student = check_and_cast<Student*>(waitingStudents.front());    //get the reference to the oldest student
-            waitingStudents.pop();
+            student = check_and_cast<Student*>(waitingStudents.pop());    //get the reference to the oldest student
             askQuestion();
             busy = true;
         }
@@ -92,13 +172,13 @@ void CommunicatingTeacher::handleMessage(cMessage *msg)
     }
     else
     {
-        waitingStudents.push(msg);      //if it isn't a selfMessage, it's for sure a student coming from the previous teacher
+        Student *s = check_and_cast<Student*>(msg);
+        waitingStudents.insert(s);      //if it isn't a selfMessage, it's for sure a student coming from the previous teacher
                                                 //the student will be insert into the teacher's waiting queue and he will be scheduled
                                                 //by handleNewStudent() function
         if(!busy)
         {
-            student = check_and_cast<Student*>(waitingStudents.front());    //get the reference to the oldest student
-            waitingStudents.pop();
+            student = check_and_cast<Student*>(waitingStudents.pop());    //get the reference to the oldest student
             askQuestion();
             busy = true;
         }
@@ -107,44 +187,6 @@ void CommunicatingTeacher::handleMessage(cMessage *msg)
     //handleNewStudent();
 }
 
-
-void CommunicatingTeacher::finish()
-{
-    cancelEvent(student);
-    cancelAndDelete(student);
-
-    EV << waitingStudents.size() << endl;
-    while(!waitingStudents.empty())
-    {
-        EV << "I'm deleting" << endl;
-        waitingStudents.pop();
-    }
-    EV << waitingStudents.size() << endl;
-}
-
-
-/*
- * Another possible body oh the handleMessage function
- *
- *
-if(firstTeacher())
-{
-    send(msg, "nextTeacher");
-    newStudent();
-    askQuestion();
-    busy = true;
-}
-else if(lastTeacher())
-{
-    //statistic for student
-    delete msg;
-    handleNewStudent();
-}
-else
-{
-    send(msg, "nextTeacher");
-    handleNewStudent();
-}
 */
 
 
