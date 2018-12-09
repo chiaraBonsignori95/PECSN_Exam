@@ -8,10 +8,6 @@ network PipelinedExamSession
         string answerTimeDistribution;
         int minUniform;
         int maxUniform;
-        @signal[idleTimeInterval](type = simtime_t);
-        @statistic[teachersIdleTime](source = "idleTimeInterval"; record = vector); 
-        @signal[waitingTimeInterval](type = simtime_t);
-        @statistic[studentsWaitingTime](source = "waitingTimeInterval"; record = vector); 
   
     submodules:
     	teacher[teachersNumber]: CommunicatingTeacher;
