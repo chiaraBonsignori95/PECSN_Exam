@@ -74,7 +74,6 @@ bool Teacher::isLognormal(const char* distribution)
 void Teacher::registerSignals()
 {
     examFinishedSignal = registerSignal("examFinished");
-    studentExaminedSignal = registerSignal("studentExamined");
 }
 
 
@@ -110,8 +109,8 @@ void Teacher::askQuestion()
         answerTime = uniform(getMinUniform(), getMaxUniform());
     else if(isLognormal(getDistribution()))
         answerTime = lognormal(0, 3);
+    //answerTime = 900; // debugging statistics
     student->setCurrentAnswerTime(answerTime);
-    //answerTime = 1; // debugging statistics
     scheduleAt(simTime() + answerTime, student);
 
     //DEBUG
@@ -161,7 +160,6 @@ void Teacher::handleMessage(cMessage *msg)
        {
            Student *s = check_and_cast<Student*>(msg);
            emit(examFinishedSignal, s->getTotalAnswerTime());
-           emit(studentExaminedSignal, 1);
            clearStudent();
            EV << "Collect statistics" << endl;
        }

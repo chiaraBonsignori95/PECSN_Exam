@@ -23,7 +23,6 @@ class Teacher : public cSimpleModule
     protected:
         Student* student;
         simsignal_t examFinishedSignal;
-        simsignal_t studentExaminedSignal;
         const char* getDistribution();
         bool isUniform(const char* distribution);
         int getMinUniform();

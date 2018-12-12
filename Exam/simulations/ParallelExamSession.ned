@@ -8,6 +8,8 @@ network ParallelExamSession
         string answerTimeDistribution;
         int minUniform;
         int maxUniform;
+        @signal[examFinished](type = simtime_t);
+        @statistic[examinationTime](source = "examFinished"; record = vector);
   
     submodules:
 		teacher[teachersNumber]: Teacher;       

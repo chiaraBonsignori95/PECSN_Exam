@@ -42,7 +42,6 @@ void CommunicatingTeacher::handleStudentResponse(cMessage *msg)
     {
         Student *s = check_and_cast<Student*>(msg);
         emit(examFinishedSignal, s->getTotalAnswerTime());
-        emit(studentExaminedSignal, 1);
         emit(studentWaitingTime, s->getWaitingTimeTotal());
         delete msg;                     //the student leaves the system
     }

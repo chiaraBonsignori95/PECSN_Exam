@@ -1,32 +1,26 @@
-file 75553 1544366298                                           
+file 1178 1544529022                                            
 version 2
-run case1-0-20181209-15:38:14-2992
+run case1-0-20181211-12:50:19-14812
 attr configname case1
-attr datetime 20181209-15:38:14
+attr datetime 20181211-12:50:19
 attr experiment case1
 attr inifile omnetpp.ini
 attr iterationvars "$0=\"uniform\""
 attr iterationvarsf uniform-
 attr measurement "$0=\"uniform\""
 attr network ParallelExamSession
-attr processid 2992
+attr processid 14812
 attr repetition 0
 attr replication #0
 attr resultdir results
 attr runnumber 0
 attr seedset 0
-param **.teachersNumber 3
+param **.teachersNumber 1
 param **.answerTimeDistribution "\"uniform\""
 param **.minUniform 300
 param **.maxUniform 1800
 
-vector 0 ParallelExamSession.teacher[1] examinationTime:vector ETV
+vector 0 ParallelExamSession examinationTime:vector ETV
 attr source examFinished
-vector 1 ParallelExamSession.teacher[2] examinationTime:vector ETV
-attr source examFinished
-vector 2 ParallelExamSession.teacher[0] examinationTime:vector ETV
-attr source examFinished
-0	816 24992 7 5103 3510.736746224575 1799070.973887364534 569 1295.9055184387 5353.0707973754 1799070.9738874 6047396358.3373
-1	25808 25004 8 5102 3895.184672414325 1798411.042829998893 569 1247.6525880396 5317.742318823 1798411.04283 6019854348.4685
-2	50812 24739 9 5100 4260.496475477704 1797715.873808646726 563 1232.5836178847 5005.026374571 1797715.8738086 6033669128.7636
+0	619 557 1 14 1123.220253456384 16749.859896535055 14 746.30190788303 1586.9184297742 16749.859896535 20949640.45585
 
