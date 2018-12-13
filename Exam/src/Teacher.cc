@@ -42,20 +42,20 @@ bool Teacher::isUniform(const char* distribution)
 
 
 /*
-Returns the minimum value for the uniform distribution
+Returns the minimum value parameter for the uniform distribution
 */
 int Teacher::getMinUniform()
 {
-   return getParentModule()->par("minUniform").intValue();
+    return getParentModule()->par("minUniform").intValue();
 }
 
 
 /*
-Returns the maximum value for the uniform distribution
+Returns the maximum value parameter for the uniform distribution
 */
 int Teacher::getMaxUniform()
 {
-   return getParentModule()->par("maxUniform").intValue();
+    return getParentModule()->par("maxUniform").intValue();
 }
 
 
@@ -65,6 +65,24 @@ int Teacher::getMaxUniform()
 bool Teacher::isLognormal(const char* distribution)
 {
     return strcmp(distribution, "lognormal") == 0;
+}
+
+
+/*
+Returns the scale parameter for the Lognormal distribution (that is the mean of the Normal distribution)
+*/
+double Teacher::getScaleLognormal()
+{
+    return getParentModule()->par("scaleLognormal").doubleValue();
+}
+
+
+/*
+Returns the shape parameter for the Lognormal distribution (that is the standard deviation of the Normal distribution)
+*/
+double Teacher::getShapeLognormal()
+{
+    return getParentModule()->par("shapeLognormal").doubleValue();
 }
 
 
@@ -108,7 +126,7 @@ void Teacher::askQuestion()
     if(isUniform(getDistribution()))
         answerTime = uniform(getMinUniform(), getMaxUniform());
     else if(isLognormal(getDistribution()))
-        answerTime = lognormal(0, 3);
+        answerTime = lognormal(getScaleLognormal(), getShapeLognormal());
     //answerTime = 900; // debugging statistics
     student->setCurrentAnswerTime(answerTime);
     scheduleAt(simTime() + answerTime, student);

@@ -28,6 +28,8 @@ class Teacher : public cSimpleModule
         int getMinUniform();
         int getMaxUniform();
         bool isLognormal(const char* distribution);
+        double getScaleLognormal();
+        double getShapeLognormal();
         void registerSignals();
         int getTotalQuestionsNumber();
         void newStudent();
