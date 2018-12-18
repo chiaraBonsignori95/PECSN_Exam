@@ -30,8 +30,8 @@ void PipelinedTeacher::handleStudentResponse(cMessage *msg)
 
     if(!lastTeacher())
     {
-        cMessage *handshakeMsg = new cMessage("New student available");
-        send(handshakeMsg, "nextTeacher$o");
+        cMessage *handshake = new cMessage("New student available");
+        send(handshake, "nextTeacher$o");
     }
     else
     {
@@ -86,8 +86,8 @@ void PipelinedTeacher::handleTeacherMessage(cMessage *msg)
         {
            if(newIncomingStudent)
            {
-               msg->setName("Teacher no more busy");
-               send(msg, "previousTeacher$o");
+               cMessage *handshake = new cMessage("Teacher no more busy");
+               send(handshake, "previousTeacher$o");
            }
            else
                delete msg;

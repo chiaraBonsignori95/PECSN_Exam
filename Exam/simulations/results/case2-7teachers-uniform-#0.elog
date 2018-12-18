@@ -1,0 +1,345 @@
+E # 0 t 0 m 1 ce -1 msg -1
+SB v 1284 rid case2-7teachers-0-20181218-15:56:39-15752 b 1000
+KF p -1 c "" s ""
+MC id 1 c omnetpp::cModule t exam.simulations.PipelinedExamSession n PipelinedExamSession cm 1
+MS id 1 d ""
+MC id 2 c PipelinedTeacher t exam.PipelinedTeacher pid 1 n teacher[0]
+GC m 2 g 0 n previousTeacher$i o 0
+GC m 2 g 1 n previousTeacher$o o 1
+GC m 2 g 2 n nextTeacher$i o 0
+GC m 2 g 3 n nextTeacher$o o 1
+MS id 2 d ""
+MC id 3 c PipelinedTeacher t exam.PipelinedTeacher pid 1 n teacher[1]
+GC m 3 g 0 n previousTeacher$i o 0
+GC m 3 g 1 n previousTeacher$o o 1
+GC m 3 g 2 n nextTeacher$i o 0
+GC m 3 g 3 n nextTeacher$o o 1
+MS id 3 d ""
+MC id 4 c PipelinedTeacher t exam.PipelinedTeacher pid 1 n teacher[2]
+GC m 4 g 0 n previousTeacher$i o 0
+GC m 4 g 1 n previousTeacher$o o 1
+GC m 4 g 2 n nextTeacher$i o 0
+GC m 4 g 3 n nextTeacher$o o 1
+MS id 4 d ""
+CC sm 2 sg 3 dm 3 dg 0
+CC sm 3 sg 1 dm 2 dg 2
+CC sm 3 sg 3 dm 4 dg 0
+CC sm 4 sg 1 dm 3 dg 2
+MB sm 1 tm 2 m initialize
+CM id 0 tid 0 eid 0 etid 0 c Student n Student pe -1
+BS id 0 tid 0 eid 0 etid 0 c Student n Student pe 0
+ES t 1123.220253456384
+ME
+
+E # 1 t 1123.220253456384 m 2 ce 0 msg 0
+CM id 1 tid 1 eid 1 etid 1 c omnetpp::cMessage n "New student available" pe -1
+BS id 1 tid 1 eid 1 etid 1 c omnetpp::cMessage n "New student available" pe 1
+SH sm 2 sg 3
+ES t 1123.220253456384
+CL id 1 tid 1 eid 1 etid 1 c omnetpp::cMessage n "New student available" pe 1 cid 2
+
+E # 2 t 1123.220253456384 m 3 ce 1 msg 1
+BS id 1 tid 1 eid 1 etid 1 c omnetpp::cMessage n "Teacher no more busy" pe 2
+SH sm 3 sg 1
+ES t 1123.220253456384
+CL id 1 tid 1 eid 1 etid 1 c omnetpp::cMessage n "Teacher no more busy" pe 2 cid 3
+
+E # 3 t 1123.220253456384 m 2 ce 2 msg 1
+BS id 0 tid 0 eid 0 etid 0 c Student n Student pe 1
+SH sm 2 sg 3
+ES t 1123.220253456384
+CL id 0 tid 0 eid 0 etid 0 c Student n Student pe 3 cid 4
+DM id 1 tid 1 eid 1 etid 1 c omnetpp::cMessage n "Teacher no more busy" pe 3
+CM id 5 tid 5 eid 5 etid 5 c omnetpp::cMessage n Student pe -1
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[0]: New student number 5
+BS id 5 tid 5 eid 5 etid 5 c Student n Student pe 3
+ES t 2312.487178039737
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[0]: Question done to student  5
+
+E # 4 t 1123.220253456384 m 3 ce 3 msg 0
+BS id 0 tid 0 eid 0 etid 0 c Student n Student pe 4
+ES t 2496.004300913774
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[1]: Question done to student  0
+
+E # 5 t 2312.487178039737 m 2 ce 3 msg 5
+CM id 6 tid 6 eid 6 etid 6 c omnetpp::cMessage n "New student available" pe -1
+BS id 6 tid 6 eid 6 etid 6 c omnetpp::cMessage n "New student available" pe 5
+SH sm 2 sg 3
+ES t 2312.487178039737
+CL id 6 tid 6 eid 6 etid 6 c omnetpp::cMessage n "New student available" pe 5 cid 7
+
+E # 6 t 2312.487178039737 m 3 ce 5 msg 6
+DM id 6 tid 6 eid 6 etid 6 c omnetpp::cMessage n "New student available" pe 6
+
+E # 7 t 2496.004300913774 m 3 ce 4 msg 0
+CM id 8 tid 8 eid 8 etid 8 c omnetpp::cMessage n "New student available" pe -1
+BS id 8 tid 8 eid 8 etid 8 c omnetpp::cMessage n "New student available" pe 7
+SH sm 3 sg 3
+ES t 2496.004300913774
+CL id 8 tid 8 eid 8 etid 8 c omnetpp::cMessage n "New student available" pe 7 cid 9
+
+E # 8 t 2496.004300913774 m 4 ce 7 msg 8
+BS id 8 tid 8 eid 8 etid 8 c omnetpp::cMessage n "Teacher no more busy" pe 8
+SH sm 4 sg 1
+ES t 2496.004300913774
+CL id 8 tid 8 eid 8 etid 8 c omnetpp::cMessage n "Teacher no more busy" pe 8 cid 10
+
+E # 9 t 2496.004300913774 m 3 ce 8 msg 8
+BS id 0 tid 0 eid 0 etid 0 c Student n Student pe 7
+SH sm 3 sg 3
+ES t 2496.004300913774
+CL id 0 tid 0 eid 0 etid 0 c Student n Student pe 9 cid 11
+CM id 12 tid 12 eid 12 etid 12 c omnetpp::cMessage n "Teacher no more busy" pe -1
+BS id 12 tid 12 eid 12 etid 12 c omnetpp::cMessage n "Teacher no more busy" pe 9
+SH sm 3 sg 1
+ES t 2496.004300913774
+CL id 12 tid 12 eid 12 etid 12 c omnetpp::cMessage n "Teacher no more busy" pe 9 cid 13
+
+E # 10 t 2496.004300913774 m 4 ce 9 msg 0
+BS id 0 tid 0 eid 0 etid 0 c Student n Student pe 10
+ES t 4062.402917048895
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[2]: Question done to student  0
+
+E # 11 t 2496.004300913774 m 2 ce 9 msg 12
+BS id 5 tid 5 eid 5 etid 5 c Student n Student pe 5
+SH sm 2 sg 3
+ES t 2496.004300913774
+CL id 5 tid 5 eid 5 etid 5 c Student n Student pe 11 cid 14
+DM id 12 tid 12 eid 12 etid 12 c omnetpp::cMessage n "Teacher no more busy" pe 11
+CM id 15 tid 15 eid 15 etid 15 c omnetpp::cMessage n Student pe -1
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[0]: New student number 15
+BS id 15 tid 15 eid 15 etid 15 c Student n Student pe 11
+ES t 3700.149356480689
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[0]: Question done to student  15
+
+E # 12 t 2496.004300913774 m 3 ce 11 msg 5
+BS id 5 tid 5 eid 5 etid 5 c Student n Student pe 12
+ES t 4082.922730688006
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[1]: Question done to student  5
+
+E # 13 t 3700.149356480689 m 2 ce 11 msg 15
+CM id 16 tid 16 eid 16 etid 16 c omnetpp::cMessage n "New student available" pe -1
+BS id 16 tid 16 eid 16 etid 16 c omnetpp::cMessage n "New student available" pe 13
+SH sm 2 sg 3
+ES t 3700.149356480689
+CL id 16 tid 16 eid 16 etid 16 c omnetpp::cMessage n "New student available" pe 13 cid 17
+
+E # 14 t 3700.149356480689 m 3 ce 13 msg 16
+DM id 16 tid 16 eid 16 etid 16 c omnetpp::cMessage n "New student available" pe 14
+
+E # 15 t 4062.402917048895 m 4 ce 10 msg 0
+DM id 0 tid 0 eid 0 etid 0 c omnetpp::cMessage n Student pe 15
+
+E # 16 t 4082.922730688006 m 3 ce 12 msg 5
+CM id 18 tid 18 eid 18 etid 18 c omnetpp::cMessage n "New student available" pe -1
+BS id 18 tid 18 eid 18 etid 18 c omnetpp::cMessage n "New student available" pe 16
+SH sm 3 sg 3
+ES t 4082.922730688006
+CL id 18 tid 18 eid 18 etid 18 c omnetpp::cMessage n "New student available" pe 16 cid 19
+
+E # 17 t 4082.922730688006 m 4 ce 16 msg 18
+BS id 18 tid 18 eid 18 etid 18 c omnetpp::cMessage n "Teacher no more busy" pe 17
+SH sm 4 sg 1
+ES t 4082.922730688006
+CL id 18 tid 18 eid 18 etid 18 c omnetpp::cMessage n "Teacher no more busy" pe 17 cid 20
+
+E # 18 t 4082.922730688006 m 3 ce 17 msg 18
+BS id 5 tid 5 eid 5 etid 5 c Student n Student pe 16
+SH sm 3 sg 3
+ES t 4082.922730688006
+CL id 5 tid 5 eid 5 etid 5 c Student n Student pe 18 cid 21
+CM id 22 tid 22 eid 22 etid 22 c omnetpp::cMessage n "Teacher no more busy" pe -1
+BS id 22 tid 22 eid 22 etid 22 c omnetpp::cMessage n "Teacher no more busy" pe 18
+SH sm 3 sg 1
+ES t 4082.922730688006
+CL id 22 tid 22 eid 22 etid 22 c omnetpp::cMessage n "Teacher no more busy" pe 18 cid 23
+
+E # 19 t 4082.922730688006 m 4 ce 18 msg 5
+BS id 5 tid 5 eid 5 etid 5 c Student n Student pe 19
+ES t 5200.247496762313
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[2]: Question done to student  5
+
+E # 20 t 4082.922730688006 m 2 ce 18 msg 22
+BS id 15 tid 15 eid 15 etid 15 c Student n Student pe 13
+SH sm 2 sg 3
+ES t 4082.922730688006
+CL id 15 tid 15 eid 15 etid 15 c Student n Student pe 20 cid 24
+DM id 22 tid 22 eid 22 etid 22 c omnetpp::cMessage n "Teacher no more busy" pe 20
+CM id 25 tid 25 eid 25 etid 25 c omnetpp::cMessage n Student pe -1
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[0]: New student number 25
+BS id 25 tid 25 eid 25 etid 25 c Student n Student pe 20
+ES t 5653.800336574205
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[0]: Question done to student  25
+
+E # 21 t 4082.922730688006 m 3 ce 20 msg 15
+BS id 15 tid 15 eid 15 etid 15 c Student n Student pe 21
+ES t 5018.404925870709
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[1]: Question done to student  15
+
+E # 22 t 5018.404925870709 m 3 ce 21 msg 15
+CM id 26 tid 26 eid 26 etid 26 c omnetpp::cMessage n "New student available" pe -1
+BS id 26 tid 26 eid 26 etid 26 c omnetpp::cMessage n "New student available" pe 22
+SH sm 3 sg 3
+ES t 5018.404925870709
+CL id 26 tid 26 eid 26 etid 26 c omnetpp::cMessage n "New student available" pe 22 cid 27
+
+E # 23 t 5018.404925870709 m 4 ce 22 msg 26
+DM id 26 tid 26 eid 26 etid 26 c omnetpp::cMessage n "New student available" pe 23
+
+E # 24 t 5200.247496762313 m 4 ce 19 msg 5
+DM id 5 tid 5 eid 5 etid 5 c omnetpp::cMessage n Student pe 24
+
+E # 25 t 5653.800336574205 m 2 ce 20 msg 25
+CM id 28 tid 28 eid 28 etid 28 c omnetpp::cMessage n "New student available" pe -1
+BS id 28 tid 28 eid 28 etid 28 c omnetpp::cMessage n "New student available" pe 25
+SH sm 2 sg 3
+ES t 5653.800336574205
+CL id 28 tid 28 eid 28 etid 28 c omnetpp::cMessage n "New student available" pe 25 cid 29
+
+E # 26 t 5653.800336574205 m 3 ce 25 msg 28
+BS id 28 tid 28 eid 28 etid 28 c omnetpp::cMessage n "Teacher no more busy" pe 26
+SH sm 3 sg 1
+ES t 5653.800336574205
+CL id 28 tid 28 eid 28 etid 28 c omnetpp::cMessage n "Teacher no more busy" pe 26 cid 30
+
+E # 27 t 5653.800336574205 m 2 ce 26 msg 28
+BS id 25 tid 25 eid 25 etid 25 c Student n Student pe 25
+SH sm 2 sg 3
+ES t 5653.800336574205
+CL id 25 tid 25 eid 25 etid 25 c Student n Student pe 27 cid 31
+DM id 28 tid 28 eid 28 etid 28 c omnetpp::cMessage n "Teacher no more busy" pe 27
+CM id 32 tid 32 eid 32 etid 32 c omnetpp::cMessage n Student pe -1
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[0]: New student number 32
+BS id 32 tid 32 eid 32 etid 32 c Student n Student pe 27
+ES t 6889.145881170408
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[0]: Question done to student  32
+
+E # 28 t 5653.800336574205 m 3 ce 27 msg 25
+BS id 25 tid 25 eid 25 etid 25 c Student n Student pe 28
+ES t 6922.641509212554
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[1]: Question done to student  25
+
+E # 29 t 6889.145881170408 m 2 ce 27 msg 32
+CM id 33 tid 33 eid 33 etid 33 c omnetpp::cMessage n "New student available" pe -1
+BS id 33 tid 33 eid 33 etid 33 c omnetpp::cMessage n "New student available" pe 29
+SH sm 2 sg 3
+ES t 6889.145881170408
+CL id 33 tid 33 eid 33 etid 33 c omnetpp::cMessage n "New student available" pe 29 cid 34
+
+E # 30 t 6889.145881170408 m 3 ce 29 msg 33
+DM id 33 tid 33 eid 33 etid 33 c omnetpp::cMessage n "New student available" pe 30
+
+E # 31 t 6922.641509212554 m 3 ce 28 msg 25
+CM id 35 tid 35 eid 35 etid 35 c omnetpp::cMessage n "New student available" pe -1
+BS id 35 tid 35 eid 35 etid 35 c omnetpp::cMessage n "New student available" pe 31
+SH sm 3 sg 3
+ES t 6922.641509212554
+CL id 35 tid 35 eid 35 etid 35 c omnetpp::cMessage n "New student available" pe 31 cid 36
+
+E # 32 t 6922.641509212554 m 4 ce 31 msg 35
+BS id 35 tid 35 eid 35 etid 35 c omnetpp::cMessage n "Teacher no more busy" pe 32
+SH sm 4 sg 1
+ES t 6922.641509212554
+CL id 35 tid 35 eid 35 etid 35 c omnetpp::cMessage n "Teacher no more busy" pe 32 cid 37
+
+E # 33 t 6922.641509212554 m 3 ce 32 msg 35
+BS id 25 tid 25 eid 25 etid 25 c Student n Student pe 31
+SH sm 3 sg 3
+ES t 6922.641509212554
+CL id 25 tid 25 eid 25 etid 25 c Student n Student pe 33 cid 38
+CM id 39 tid 39 eid 39 etid 39 c omnetpp::cMessage n "Teacher no more busy" pe -1
+BS id 39 tid 39 eid 39 etid 39 c omnetpp::cMessage n "Teacher no more busy" pe 33
+SH sm 3 sg 1
+ES t 6922.641509212554
+CL id 39 tid 39 eid 39 etid 39 c omnetpp::cMessage n "Teacher no more busy" pe 33 cid 40
+
+E # 34 t 6922.641509212554 m 4 ce 33 msg 25
+BS id 25 tid 25 eid 25 etid 25 c Student n Student pe 34
+ES t 7799.214071547613
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[2]: Question done to student  25
+
+E # 35 t 6922.641509212554 m 2 ce 33 msg 39
+BS id 32 tid 32 eid 32 etid 32 c Student n Student pe 29
+SH sm 2 sg 3
+ES t 6922.641509212554
+CL id 32 tid 32 eid 32 etid 32 c Student n Student pe 35 cid 41
+DM id 39 tid 39 eid 39 etid 39 c omnetpp::cMessage n "Teacher no more busy" pe 35
+CM id 42 tid 42 eid 42 etid 42 c omnetpp::cMessage n Student pe -1
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[0]: New student number 42
+BS id 42 tid 42 eid 42 etid 42 c Student n Student pe 35
+ES t 7879.022324178368
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[0]: Question done to student  42
+
+E # 36 t 6922.641509212554 m 3 ce 35 msg 32
+BS id 32 tid 32 eid 32 etid 32 c Student n Student pe 36
+ES t 7668.94341709558
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[1]: Question done to student  32
+
+E # 37 t 7668.94341709558 m 3 ce 36 msg 32
+CM id 43 tid 43 eid 43 etid 43 c omnetpp::cMessage n "New student available" pe -1
+BS id 43 tid 43 eid 43 etid 43 c omnetpp::cMessage n "New student available" pe 37
+SH sm 3 sg 3
+ES t 7668.94341709558
+CL id 43 tid 43 eid 43 etid 43 c omnetpp::cMessage n "New student available" pe 37 cid 44
+
+E # 38 t 7668.94341709558 m 4 ce 37 msg 43
+DM id 43 tid 43 eid 43 etid 43 c omnetpp::cMessage n "New student available" pe 38
+
+E # 39 t 7799.214071547613 m 4 ce 34 msg 25
+DM id 25 tid 25 eid 25 etid 25 c omnetpp::cMessage n Student pe 39
+
+E # 40 t 7879.022324178368 m 2 ce 35 msg 42
+CM id 45 tid 45 eid 45 etid 45 c omnetpp::cMessage n "New student available" pe -1
+BS id 45 tid 45 eid 45 etid 45 c omnetpp::cMessage n "New student available" pe 40
+SH sm 2 sg 3
+ES t 7879.022324178368
+CL id 45 tid 45 eid 45 etid 45 c omnetpp::cMessage n "New student available" pe 40 cid 46
+
+E # 41 t 7879.022324178368 m 3 ce 40 msg 45
+BS id 45 tid 45 eid 45 etid 45 c omnetpp::cMessage n "Teacher no more busy" pe 41
+SH sm 3 sg 1
+ES t 7879.022324178368
+CL id 45 tid 45 eid 45 etid 45 c omnetpp::cMessage n "Teacher no more busy" pe 41 cid 47
+
+E # 42 t 7879.022324178368 m 2 ce 41 msg 45
+BS id 42 tid 42 eid 42 etid 42 c Student n Student pe 40
+SH sm 2 sg 3
+ES t 7879.022324178368
+CL id 42 tid 42 eid 42 etid 42 c Student n Student pe 42 cid 48
+DM id 45 tid 45 eid 45 etid 45 c omnetpp::cMessage n "Teacher no more busy" pe 42
+CM id 49 tid 49 eid 49 etid 49 c omnetpp::cMessage n Student pe -1
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[0]: New student number 49
+BS id 49 tid 49 eid 49 etid 49 c Student n Student pe 42
+ES t 9516.681826813147
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[0]: Question done to student  49
+
+E # 43 t 7879.022324178368 m 3 ce 42 msg 42
+BS id 42 tid 42 eid 42 etid 42 c Student n Student pe 43
+ES t 8264.091787766665
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[1]: Question done to student  42
+
+E # 44 t 8264.091787766665 m 3 ce 43 msg 42
+CM id 50 tid 50 eid 50 etid 50 c omnetpp::cMessage n "New student available" pe -1
+BS id 50 tid 50 eid 50 etid 50 c omnetpp::cMessage n "New student available" pe 44
+SH sm 3 sg 3
+ES t 8264.091787766665
+CL id 50 tid 50 eid 50 etid 50 c omnetpp::cMessage n "New student available" pe 44 cid 51
+
+E # 45 t 8264.091787766665 m 4 ce 44 msg 50
+BS id 50 tid 50 eid 50 etid 50 c omnetpp::cMessage n "Teacher no more busy" pe 45
+SH sm 4 sg 1
+ES t 8264.091787766665
+CL id 50 tid 50 eid 50 etid 50 c omnetpp::cMessage n "Teacher no more busy" pe 45 cid 52
+
+E # 46 t 8264.091787766665 m 3 ce 45 msg 50
+BS id 42 tid 42 eid 42 etid 42 c Student n Student pe 44
+SH sm 3 sg 3
+ES t 8264.091787766665
+CL id 42 tid 42 eid 42 etid 42 c Student n Student pe 46 cid 53
+DM id 50 tid 50 eid 50 etid 50 c omnetpp::cMessage n "Teacher no more busy" pe 46
+
+E # 47 t 8264.091787766665 m 4 ce 46 msg 42
+BS id 42 tid 42 eid 42 etid 42 c Student n Student pe 47
+ES t 10009.585933852941
+- INFO (PipelinedTeacher)PipelinedExamSession.teacher[2]: Question done to student  42
+SE e 0 c 38 m "Simulation time limit reached -- at t=9000s, event #48"
