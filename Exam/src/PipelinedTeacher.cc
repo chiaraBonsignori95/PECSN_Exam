@@ -26,18 +26,33 @@ bool PipelinedTeacher::lastTeacher()
 void PipelinedTeacher::handleStudentResponse(cMessage *msg)
 {
     updateStudentState(msg);
-    busy = false;
+    student->setStartingWaitingTime(simTime());
 
+    idleTimeStart = simTime();
     if(!lastTeacher())
     {
         cMessage *handshake = new cMessage("New student available");
         send(handshake, "nextTeacher$o");
+
     }
     else
     {
-        //update statistics
-        delete msg;
+        /*   collect statistics   */
+        EV << student->getTotalAnswerTime() << endl;
+        emit(examFinishedSignal, student->getTotalAnswerTime() + student->getTotalWaitingTime());
+        emit(waitingTimeSignal, student->getTotalWaitingTime());
+
+        EV << "Student " << student->getId() << " deleted"  << endl;
+        delete student;
         student = NULL;
+        busy = false;
+
+        if(newIncomingStudent)
+        {
+            cMessage *handshake = new cMessage("Teacher no more busy");
+            send(handshake, "previousTeacher$o");
+            newIncomingStudent = false;
+        }
     }
 }
 
@@ -59,7 +74,7 @@ bool PipelinedTeacher::teacherNotBusy(cMessage *msg)
  */
 void PipelinedTeacher::handleTeacherMessage(cMessage *msg)
 {
-    if(newStudentAvailable(msg))    //handshake message
+    if(newStudentAvailable(msg))
     {
         if(busy)
         {
@@ -74,58 +89,72 @@ void PipelinedTeacher::handleTeacherMessage(cMessage *msg)
     }
     else if(teacherNotBusy(msg))
     {
+        EV << "Student " << student->getId()  << " sent to next teacher" << endl;
+        simtime_t currentTotalWaitingTime = student->getTotalWaitingTime();
+        student->setTotalWaitingTime(currentTotalWaitingTime +  simTime() - student->getStartingWaitingTime());
+
+        idleTimeTotal += simTime() - idleTimeStart;
+
         send(student, "nextTeacher$o");
         student = NULL;
-        if(firstTeacher())
+        busy = false;
+
+        idleTimeStart = simTime();
+
+        if(newIncomingStudent)
         {
-            delete msg;
-            newStudent();
-            askQuestion();
+            msg->setName("Teacher no more busy");
+            send(msg, "previousTeacher$o");
+            newIncomingStudent = false;
         }
         else
+            delete msg;
+
+        if(firstTeacher())
         {
-           if(newIncomingStudent)
-           {
-               cMessage *handshake = new cMessage("Teacher no more busy");
-               send(handshake, "previousTeacher$o");
-           }
-           else
-               delete msg;
+            newStudent();
+            askQuestion();
+            busy = true;
         }
     }
-    else    //new student arrived
+    else //is a student
     {
         student = check_and_cast<Student*>(msg);
         askQuestion();
         busy = true;
-        newIncomingStudent = false;
+
+        idleTimeTotal += simTime() - idleTimeStart;
     }
 }
 
 
 /*
  Registers signals for statistics
-
+*/
 void PipelinedTeacher::registerSignals()
 {
     Teacher::registerSignals();
-    idleTime = registerSignal("idleTimeInterval");
-    studentWaitingTime = registerSignal("waitingTimeInterval");
+    idleTimeSignal = registerSignal("idleTime");
+    waitingTimeSignal = registerSignal("waitingTime");
 }
 
 
+/*
  It is used only by the first and the last teachers
 */
 void PipelinedTeacher::initialize()
-{
+{   WATCH(busy);
+    WATCH(newIncomingStudent);
     if(firstTeacher())
     {
         newStudent();
         askQuestion();
         busy = true;
     }
+    else
+        idleTimeStart = simTime();
 
-    //registerSignals();
+    registerSignals();
 }
 
 
@@ -138,13 +167,10 @@ void PipelinedTeacher::handleMessage(cMessage *msg)
 }
 
 
-/*
- Clears the queue of students to avoid memory leak
- */
+
 void PipelinedTeacher::finish()
 {
-
-    //emit(idleTime, idleTimeTotal);
+    emit(idleTimeSignal, idleTimeTotal);
 }
 
 

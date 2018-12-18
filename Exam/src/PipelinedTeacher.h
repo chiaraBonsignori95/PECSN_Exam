@@ -19,7 +19,7 @@ class PipelinedTeacher : public Teacher
 private:
         bool busy;
         bool newIncomingStudent;
-        simsignal_t idleTimeSignal, studentWaitingTimeSignal;
+        simsignal_t idleTimeSignal, waitingTimeSignal;
         simtime_t idleTimeStart, idleTimeTotal;
         bool firstTeacher();
         bool lastTeacher();

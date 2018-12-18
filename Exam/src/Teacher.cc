@@ -127,7 +127,7 @@ void Teacher::askQuestion()
         answerTime = uniform(getMinUniform(), getMaxUniform());
     else if(isLognormal(getDistribution()))
         answerTime = lognormal(getScaleLognormal(), getShapeLognormal());
-    //answerTime = 900; // debugging statistics
+    answerTime = 900; // debugging statistics
     student->setCurrentAnswerTime(answerTime);
     scheduleAt(simTime() + answerTime, student);
 

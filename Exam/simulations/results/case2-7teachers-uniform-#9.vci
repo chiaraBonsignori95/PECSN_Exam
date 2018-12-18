@@ -1,0 +1,34 @@
+file 4089 1545156344                                            
+version 2
+run case2-7teachers-9-20181218-19:05:44-18724
+attr configname case2-7teachers
+attr datetime 20181218-19:05:44
+attr experiment case2-7teachers
+attr inifile simulations/omnetpp.ini
+attr iterationvars "$0=\"uniform\""
+attr iterationvarsf uniform-
+attr measurement "$0=\"uniform\""
+attr network PipelinedExamSession
+attr processid 18724
+attr repetition 9
+attr replication #9
+attr resultdir results
+attr runnumber 9
+attr seedset 9
+param **.teachersNumber 7
+param **.answerTimeDistribution "\"uniform\""
+param **.minUniform 300
+param **.maxUniform 1800
+param **.scaleLognormal 6.95654
+param **.shapeLognormal 0.65
+
+vector 0 PipelinedExamSession examinationTime:vector ETV
+attr source examFinished
+vector 1 PipelinedExamSession studentsWaitingTime:vector ETV
+attr source waitingTime
+vector 2 PipelinedExamSession teachersIdleTime:vector ETV
+attr source idleTime
+0	894 1667 85 2310 6300 86400 90 6300 6300 567000 3572100000
+1	2561 1397 85 2310 6300 86400 90 0 0 0 0
+2	3958 129 2335 2335 86400 86400 7 0 5400 18900 73710000
+
