@@ -1,9 +1,9 @@
 [General]
-last-configname=case2
-last-runnumber=1
+last-configname=case2-7teachers
+last-runnumber=0
 
 [RunModeProfiles]
-run-playback-speed=1
+run-playback-speed=1.9952623149688795
 run-min-playback-speed=0.01
 run-max-playback-speed=100
 run-min-animation-speed=nan

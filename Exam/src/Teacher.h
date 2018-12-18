@@ -2,7 +2,6 @@
 #define __EXAM_TEACHER_H_
 
 #include <omnetpp.h>
-#include <string.h>
 #include "Student_m.h"
 
 using namespace omnetpp;

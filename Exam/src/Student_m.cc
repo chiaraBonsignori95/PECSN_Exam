@@ -182,8 +182,8 @@ Register_Class(Student)
 Student::Student(const char *name, short kind) : ::omnetpp::cPacket(name,kind)
 {
     this->totalAnswerTime = 0;
-    this->waitingTimeTotal = 0;
-    this->waitingTimeStart = 0;
+    this->totalWaitingTime = 0;
+    this->startingWaitingTime = 0;
     this->answersNumber = 0;
     this->currentAnswerTime = 0;
 }
@@ -208,8 +208,8 @@ Student& Student::operator=(const Student& other)
 void Student::copy(const Student& other)
 {
     this->totalAnswerTime = other.totalAnswerTime;
-    this->waitingTimeTotal = other.waitingTimeTotal;
-    this->waitingTimeStart = other.waitingTimeStart;
+    this->totalWaitingTime = other.totalWaitingTime;
+    this->startingWaitingTime = other.startingWaitingTime;
     this->answersNumber = other.answersNumber;
     this->currentAnswerTime = other.currentAnswerTime;
 }
@@ -218,8 +218,8 @@ void Student::parsimPack(omnetpp::cCommBuffer *b) const
 {
     ::omnetpp::cPacket::parsimPack(b);
     doParsimPacking(b,this->totalAnswerTime);
-    doParsimPacking(b,this->waitingTimeTotal);
-    doParsimPacking(b,this->waitingTimeStart);
+    doParsimPacking(b,this->totalWaitingTime);
+    doParsimPacking(b,this->startingWaitingTime);
     doParsimPacking(b,this->answersNumber);
     doParsimPacking(b,this->currentAnswerTime);
 }
@@ -228,8 +228,8 @@ void Student::parsimUnpack(omnetpp::cCommBuffer *b)
 {
     ::omnetpp::cPacket::parsimUnpack(b);
     doParsimUnpacking(b,this->totalAnswerTime);
-    doParsimUnpacking(b,this->waitingTimeTotal);
-    doParsimUnpacking(b,this->waitingTimeStart);
+    doParsimUnpacking(b,this->totalWaitingTime);
+    doParsimUnpacking(b,this->startingWaitingTime);
     doParsimUnpacking(b,this->answersNumber);
     doParsimUnpacking(b,this->currentAnswerTime);
 }
@@ -244,24 +244,24 @@ void Student::setTotalAnswerTime(::omnetpp::simtime_t totalAnswerTime)
     this->totalAnswerTime = totalAnswerTime;
 }
 
-::omnetpp::simtime_t Student::getWaitingTimeTotal() const
+::omnetpp::simtime_t Student::getTotalWaitingTime() const
 {
-    return this->waitingTimeTotal;
+    return this->totalWaitingTime;
 }
 
-void Student::setWaitingTimeTotal(::omnetpp::simtime_t waitingTimeTotal)
+void Student::setTotalWaitingTime(::omnetpp::simtime_t totalWaitingTime)
 {
-    this->waitingTimeTotal = waitingTimeTotal;
+    this->totalWaitingTime = totalWaitingTime;
 }
 
-::omnetpp::simtime_t Student::getWaitingTimeStart() const
+::omnetpp::simtime_t Student::getStartingWaitingTime() const
 {
-    return this->waitingTimeStart;
+    return this->startingWaitingTime;
 }
 
-void Student::setWaitingTimeStart(::omnetpp::simtime_t waitingTimeStart)
+void Student::setStartingWaitingTime(::omnetpp::simtime_t startingWaitingTime)
 {
-    this->waitingTimeStart = waitingTimeStart;
+    this->startingWaitingTime = startingWaitingTime;
 }
 
 int Student::getAnswersNumber() const
@@ -380,8 +380,8 @@ const char *StudentDescriptor::getFieldName(int field) const
     }
     static const char *fieldNames[] = {
         "totalAnswerTime",
-        "waitingTimeTotal",
-        "waitingTimeStart",
+        "totalWaitingTime",
+        "startingWaitingTime",
         "answersNumber",
         "currentAnswerTime",
     };
@@ -393,8 +393,8 @@ int StudentDescriptor::findField(const char *fieldName) const
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     int base = basedesc ? basedesc->getFieldCount() : 0;
     if (fieldName[0]=='t' && strcmp(fieldName, "totalAnswerTime")==0) return base+0;
-    if (fieldName[0]=='w' && strcmp(fieldName, "waitingTimeTotal")==0) return base+1;
-    if (fieldName[0]=='w' && strcmp(fieldName, "waitingTimeStart")==0) return base+2;
+    if (fieldName[0]=='t' && strcmp(fieldName, "totalWaitingTime")==0) return base+1;
+    if (fieldName[0]=='s' && strcmp(fieldName, "startingWaitingTime")==0) return base+2;
     if (fieldName[0]=='a' && strcmp(fieldName, "answersNumber")==0) return base+3;
     if (fieldName[0]=='c' && strcmp(fieldName, "currentAnswerTime")==0) return base+4;
     return basedesc ? basedesc->findField(fieldName) : -1;
@@ -483,8 +483,8 @@ std::string StudentDescriptor::getFieldValueAsString(void *object, int field, in
     Student *pp = (Student *)object; (void)pp;
     switch (field) {
         case 0: return simtime2string(pp->getTotalAnswerTime());
-        case 1: return simtime2string(pp->getWaitingTimeTotal());
-        case 2: return simtime2string(pp->getWaitingTimeStart());
+        case 1: return simtime2string(pp->getTotalWaitingTime());
+        case 2: return simtime2string(pp->getStartingWaitingTime());
         case 3: return long2string(pp->getAnswersNumber());
         case 4: return double2string(pp->getCurrentAnswerTime());
         default: return "";
@@ -502,8 +502,8 @@ bool StudentDescriptor::setFieldValueAsString(void *object, int field, int i, co
     Student *pp = (Student *)object; (void)pp;
     switch (field) {
         case 0: pp->setTotalAnswerTime(string2simtime(value)); return true;
-        case 1: pp->setWaitingTimeTotal(string2simtime(value)); return true;
-        case 2: pp->setWaitingTimeStart(string2simtime(value)); return true;
+        case 1: pp->setTotalWaitingTime(string2simtime(value)); return true;
+        case 2: pp->setStartingWaitingTime(string2simtime(value)); return true;
         case 3: pp->setAnswersNumber(string2long(value)); return true;
         case 4: pp->setCurrentAnswerTime(string2double(value)); return true;
         default: return false;
