@@ -10,6 +10,7 @@ network ParallelExamSession
         int maxUniform;
         double scaleLognormal;
         double shapeLognormal;
+        
         @signal[examFinished](type = simtime_t);
         @statistic[examinationTime](source = "examFinished"; record = vector);
   

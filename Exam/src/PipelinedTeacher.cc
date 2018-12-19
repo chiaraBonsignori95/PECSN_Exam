@@ -29,6 +29,7 @@ void PipelinedTeacher::handleStudentResponse(cMessage *msg)
     student->setStartingWaitingTime(simTime());
 
     idleTimeStart = simTime();
+
     if(!lastTeacher())
     {
         cMessage *handshake = new cMessage("New student available");
@@ -37,12 +38,18 @@ void PipelinedTeacher::handleStudentResponse(cMessage *msg)
     }
     else
     {
-        /*   collect statistics   */
+        //DEBUG
         EV << student->getTotalAnswerTime() << endl;
+        //DEBUG
+
+        /*   collect statistics   */
         emit(examFinishedSignal, student->getTotalAnswerTime() + student->getTotalWaitingTime());
         emit(waitingTimeSignal, student->getTotalWaitingTime());
 
+        //DEBUG
         EV << "Student " << student->getId() << " deleted"  << endl;
+        //DEBUG
+
         delete student;
         student = NULL;
         busy = false;
@@ -52,6 +59,16 @@ void PipelinedTeacher::handleStudentResponse(cMessage *msg)
             cMessage *handshake = new cMessage("Teacher no more busy");
             send(handshake, "previousTeacher$o");
             newIncomingStudent = false;
+        }
+
+        if(firstTeacher())
+        {
+            //DEBUG
+            EV << "Not allowed to be here with more than 1 teacher" << endl;
+            //DEBUG
+            newStudent();
+            askQuestion();
+            busy = true;
         }
     }
 }
@@ -89,7 +106,10 @@ void PipelinedTeacher::handleTeacherMessage(cMessage *msg)
     }
     else if(teacherNotBusy(msg))
     {
+        //DEBUG
         EV << "Student " << student->getId()  << " sent to next teacher" << endl;
+        //DEBUG
+
         simtime_t currentTotalWaitingTime = student->getTotalWaitingTime();
         student->setTotalWaitingTime(currentTotalWaitingTime +  simTime() - student->getStartingWaitingTime());
 
@@ -143,16 +163,18 @@ void PipelinedTeacher::registerSignals()
  It is used only by the first and the last teachers
 */
 void PipelinedTeacher::initialize()
-{   WATCH(busy);
+{
+    //DEBUG
+    WATCH(busy);
     WATCH(newIncomingStudent);
+    //DEBUG
+
     if(firstTeacher())
     {
         newStudent();
         askQuestion();
         busy = true;
     }
-    else
-        idleTimeStart = simTime();
 
     registerSignals();
 }

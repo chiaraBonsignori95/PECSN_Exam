@@ -127,7 +127,11 @@ void Teacher::askQuestion()
         answerTime = uniform(getMinUniform(), getMaxUniform());
     else if(isLognormal(getDistribution()))
         answerTime = lognormal(getScaleLognormal(), getShapeLognormal());
-    answerTime = 900; // debugging statistics
+
+    //DEBUG
+    //answerTime = 900; // debugging statistics
+    //DEBUG
+
     student->setCurrentAnswerTime(answerTime);
     scheduleAt(simTime() + answerTime, student);
 
@@ -179,7 +183,6 @@ void Teacher::handleMessage(cMessage *msg)
            Student *s = check_and_cast<Student*>(msg);
            emit(examFinishedSignal, s->getTotalAnswerTime());
            clearStudent();
-           EV << "Collect statistics" << endl;
        }
 
        askQuestion();
