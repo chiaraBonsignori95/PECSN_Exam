@@ -1,0 +1,28 @@
+file 1259 1545326577                                            
+version 2
+run Parallel_7teachers-10-20181220-18:22:54-17208
+attr configname Parallel_7teachers
+attr datetime 20181220-18:22:54
+attr experiment Parallel_7teachers
+attr inifile omnetpp.ini
+attr iterationvars "$0=\"lognormal\""
+attr iterationvarsf lognormal-
+attr measurement "$0=\"lognormal\""
+attr network ParallelExamSession
+attr processid 17208
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 10
+attr seedset 0
+param **.teachersNumber 7
+param **.answerTimeDistribution "\"lognormal\""
+param **.minUniform 300
+param **.maxUniform 1800
+param **.scaleLognormal 6.8153
+param **.shapeLognormal 0.5316
+
+vector 0 ParallelExamSession examinationTime:vector ETV
+attr source examFinished
+0	732 525 29 101 4575.847237865008 15820.641178957089 13 4575.847237865 9379.7936735017 92506.408969833 682967164.64558
+

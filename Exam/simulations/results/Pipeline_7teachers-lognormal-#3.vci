@@ -1,0 +1,34 @@
+file 9262 1545327796                                            
+version 2
+run Pipeline_7teachers-13-20181220-18:43:16-15324
+attr configname Pipeline_7teachers
+attr datetime 20181220-18:43:16
+attr experiment Pipeline_7teachers
+attr inifile omnetpp.ini
+attr iterationvars "$0=\"lognormal\""
+attr iterationvarsf lognormal-
+attr measurement "$0=\"lognormal\""
+attr network PipelinedExamSession
+attr processid 15324
+attr repetition 3
+attr replication #3
+attr resultdir results
+attr runnumber 13
+attr seedset 3
+param **.teachersNumber 7
+param **.answerTimeDistribution "\"lognormal\""
+param **.minUniform 300
+param **.maxUniform 1800
+param **.scaleLognormal 6.8153
+param **.shapeLognormal 0.5316
+
+vector 0 PipelinedExamSession examinationTime:vector ETV
+attr source examFinished
+vector 1 PipelinedExamSession studentsWaitingTime:vector ETV
+attr source waitingTime
+vector 2 PipelinedExamSession teachersIdleTime:vector ETV
+attr source idleTime
+0	902 4113 57 2440 7673.788511578866 170202.979089963633 96 6821.9675276139 13783.315199913 923576.70517776 9128326023.037
+1	5015 4029 57 2440 7673.788511578866 170202.979089963633 96 0 6356.3397521776 235452.08687199 782150165.27033
+2	9044 216 2461 2461 172800 172800 7 64382.498376771 82386.739509303 501843.32624741 36194387293.664
+

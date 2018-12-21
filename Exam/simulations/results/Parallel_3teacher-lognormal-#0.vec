@@ -1,0 +1,43 @@
+version 2
+run Parallel_3teacher-10-20181220-18:21:50-26636
+attr configname Parallel_3teacher
+attr datetime 20181220-18:21:50
+attr experiment Parallel_3teacher
+attr inifile omnetpp.ini
+attr iterationvars "$0=\"lognormal\""
+attr iterationvarsf lognormal-
+attr measurement "$0=\"lognormal\""
+attr network ParallelExamSession
+attr processid 26636
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 10
+attr seedset 0
+param **.teachersNumber 3
+param **.answerTimeDistribution "\"lognormal\""
+param **.minUniform 300
+param **.maxUniform 1800
+param **.scaleLognormal 6.8153
+param **.shapeLognormal 0.5316
+
+vector 0 ParallelExamSession examinationTime:vector ETV
+attr source examFinished
+0	7	2628.468572325643	2628.4685723256
+0	8	2797.45594435583	2797.4559443558
+0	12	4181.26081597539	1552.7922436497
+0	13	4580.343169837163	4580.3431698372
+0	18	7442.637966077002	4645.1820217212
+0	20	7750.94900232187	3569.6881863465
+0	23	8389.968174182542	3809.6250043454
+0	28	9862.722422991832	2420.0844569148
+0	29	10074.3535679511	1684.3853937686
+0	30	10641.394972437239	2890.4459701154
+0	36	12840.050642152855	2977.328219161
+0	37	12879.325155976169	2804.9715880251
+0	40	13702.825899856233	3061.430927419
+0	44	15852.159062209059	2972.8339062329
+0	48	16923.287524961369	4083.2368828085
+0	50	17534.534638972528	3831.7087391163
+0	51	17836.146434229004	1983.9873720199
+
