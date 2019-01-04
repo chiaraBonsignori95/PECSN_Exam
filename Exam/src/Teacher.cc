@@ -110,8 +110,9 @@ int Teacher::getTotalQuestionsNumber()
 void Teacher::newStudent()
 {
     student = new Student("Student");
+    student->setStudentID(student->getTotalMessageCount());
     //DEBUG
-    EV << "New student number " << student->getId() << endl;
+    EV << "New student number " << student->getStudentID() << endl;
     //DEBUG
 }
 
@@ -129,7 +130,7 @@ void Teacher::askQuestion()
         answerTime = lognormal(getScaleLognormal(), getShapeLognormal());
 
     //DEBUG
-    //answerTime = 900; // debugging statistics
+    //answerTime = 600; // debugging statistics
     //DEBUG
 
     student->setCurrentAnswerTime(answerTime);
@@ -181,7 +182,15 @@ void Teacher::handleMessage(cMessage *msg)
        if(examFinished(student->getAnswersNumber()))
        {
            Student *s = check_and_cast<Student*>(msg);
-           emit(examFinishedSignal, s->getTotalAnswerTime());
+           if(hasListeners(PRE_MODEL_CHANGE))
+           {
+               cExaminationTime exam;
+               exam.studentID = s->getStudentID();
+               exam.examinationTime = s->getTotalAnswerTime();
+               emit(PRE_MODEL_CHANGE, &exam);
+           }
+
+
            clearStudent();
        }
 

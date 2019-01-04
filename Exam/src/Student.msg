@@ -1,5 +1,7 @@
 packet Student 
 {
+    long studentID;
+    
     simtime_t totalAnswerTime;		//examination time
     
     simtime_t totalWaitingTime;

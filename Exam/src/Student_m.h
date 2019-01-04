@@ -23,6 +23,8 @@
  * <pre>
  * packet Student
  * {
+ *     long studentID;
+ * 
  *     simtime_t totalAnswerTime;		//examination time
  * 
  *     simtime_t totalWaitingTime;
@@ -36,6 +38,7 @@
 class Student : public ::omnetpp::cPacket
 {
   protected:
+    long studentID;
     ::omnetpp::simtime_t totalAnswerTime;
     ::omnetpp::simtime_t totalWaitingTime;
     ::omnetpp::simtime_t startingWaitingTime;
@@ -59,6 +62,8 @@ class Student : public ::omnetpp::cPacket
     virtual void parsimUnpack(omnetpp::cCommBuffer *b) override;
 
     // field getter/setter methods
+    virtual long getStudentID() const;
+    virtual void setStudentID(long studentID);
     virtual ::omnetpp::simtime_t getTotalAnswerTime() const;
     virtual void setTotalAnswerTime(::omnetpp::simtime_t totalAnswerTime);
     virtual ::omnetpp::simtime_t getTotalWaitingTime() const;

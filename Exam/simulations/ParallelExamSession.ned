@@ -11,7 +11,7 @@ network ParallelExamSession
         double scaleLognormal;
         double shapeLognormal;
         
-        @signal[examFinished](type = simtime_t);
+        @signal[examFinished](type = cObject*);
         @statistic[examinationTime](source = "examFinished"; record = vector);
   
     submodules:

@@ -3,6 +3,7 @@
 
 #include <omnetpp.h>
 #include "Student_m.h"
+#include "cExaminationTime.h"
 
 using namespace omnetpp;
 using namespace std;
