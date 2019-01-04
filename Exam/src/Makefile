@@ -30,7 +30,7 @@ PROJECTRELATIVE_PATH = src
 O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 
 # Object files for local .cc, .msg and .sm files
-OBJS = $O/cExaminationTime.o $O/PipelinedTeacher.o $O/Teacher.o $O/Student_m.o
+OBJS = $O/PipelinedTeacher.o $O/Teacher.o $O/Student_m.o
 
 # Message files
 MSGFILES = \

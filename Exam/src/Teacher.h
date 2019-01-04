@@ -3,7 +3,6 @@
 
 #include <omnetpp.h>
 #include "Student_m.h"
-#include "cExaminationTime.h"
 
 using namespace omnetpp;
 using namespace std;
@@ -22,7 +21,7 @@ class Teacher : public cSimpleModule
 
     protected:
         Student* student;
-        simsignal_t examFinishedSignal;
+        simsignal_t examFinishedSignal, studentIDSignal;
         const char* getDistribution();
         bool isUniform(const char* distribution);
         int getMinUniform();
@@ -37,6 +36,7 @@ class Teacher : public cSimpleModule
         void updateStudentState(cMessage *student);
         virtual void initialize();
         virtual void handleMessage(cMessage* msg);
+        //virtual void finish() {student->resetMessageCounters();};
 };
 
 #endif

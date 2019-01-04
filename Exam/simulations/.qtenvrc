@@ -1,6 +1,6 @@
 [General]
-last-configname=Test1_Pipelined_7Teachers
-last-runnumber=0
+last-configname=Pipeline_7teachers
+last-runnumber=10
 
 [RunModeProfiles]
 run-playback-speed=1

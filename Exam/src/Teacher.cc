@@ -92,6 +92,7 @@ double Teacher::getShapeLognormal()
 void Teacher::registerSignals()
 {
     examFinishedSignal = registerSignal("examFinished");
+    studentIDSignal = registerSignal("student");
 }
 
 
@@ -110,9 +111,9 @@ int Teacher::getTotalQuestionsNumber()
 void Teacher::newStudent()
 {
     student = new Student("Student");
-    student->setStudentID(student->getTotalMessageCount());
+    //student->setStudentID(student->getTotalMessageCount());
     //DEBUG
-    EV << "New student number " << student->getStudentID() << endl;
+    EV << "New student number " << student->getId() << endl;
     //DEBUG
 }
 
@@ -130,7 +131,7 @@ void Teacher::askQuestion()
         answerTime = lognormal(getScaleLognormal(), getShapeLognormal());
 
     //DEBUG
-    //answerTime = 600; // debugging statistics
+    //answerTime = 900; // debugging statistics
     //DEBUG
 
     student->setCurrentAnswerTime(answerTime);
@@ -182,16 +183,11 @@ void Teacher::handleMessage(cMessage *msg)
        if(examFinished(student->getAnswersNumber()))
        {
            Student *s = check_and_cast<Student*>(msg);
-           if(hasListeners(PRE_MODEL_CHANGE))
-           {
-               cExaminationTime exam;
-               exam.studentID = s->getStudentID();
-               exam.examinationTime = s->getTotalAnswerTime();
-               emit(PRE_MODEL_CHANGE, &exam);
-           }
-
-
-           clearStudent();
+           emit(examFinishedSignal, s->getTotalAnswerTime());
+           emit(studentIDSignal, s->getId());
+           //clearStudent();
+           delete s;
+           newStudent();
        }
 
        askQuestion();

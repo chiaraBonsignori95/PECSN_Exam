@@ -1,0 +1,26 @@
+version 2
+run Parallel_3Teachers-1-20190104-10:50:47-16024
+attr configname Parallel_3Teachers
+attr datetime 20190104-10:50:47
+attr experiment Parallel_3Teachers
+attr inifile omnetpp.ini
+attr iterationvars "$0=\"uniform\""
+attr iterationvarsf uniform-
+attr measurement "$0=\"uniform\""
+attr network ParallelExamSession
+attr processid 16024
+attr repetition 1
+attr replication #1
+attr resultdir results
+attr runnumber 1
+attr seedset 1
+param **.teachersNumber 3
+param **.answerTimeDistribution "\"uniform\""
+param **.minUniform 300
+param **.maxUniform 900
+param **.scaleLognormal 6.2854
+param **.shapeLognormal 0.4724
+
+scalar ParallelExamSession studentID:min 435
+attr source student
+
