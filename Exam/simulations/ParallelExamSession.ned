@@ -13,8 +13,8 @@ network ParallelExamSession
         
         @signal[examFinished](type = simtime_t);
         @statistic[examinationTime](source = "examFinished"; record = vector);
-        @signal[student](type = long);
-        @statistic[studentID](source = "student"; record = vector, min);
+        @signal[student](type = int);
+        @statistic[studentID](source = "student"; record = vector, min, max);
   
     submodules:
 		teacher[teachersNumber]: Teacher;       

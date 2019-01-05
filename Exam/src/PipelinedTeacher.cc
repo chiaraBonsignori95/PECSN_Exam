@@ -63,7 +63,8 @@ void PipelinedTeacher::handleStudentResponse(cMessage *msg)
 
         //collect statistics
         emit(examFinishedSignal, student->getTotalAnswerTime() + student->getTotalWaitingTime());
-        emit(waitingTimeSignal, student->getTotalWaitingTime());
+        //emit(waitingTimeSignal, student->getTotalWaitingTime());
+        emit(studentIDSignal, student->getStudentID());
 
         //DEBUG
         EV << "Student " << student->getId() << " deleted"  << endl;
@@ -85,6 +86,8 @@ void PipelinedTeacher::handleStudentResponse(cMessage *msg)
         if(firstTeacher())
         {
             newStudent();
+            student->setStudentID(studentCounter);
+            studentCounter++;
             askQuestion();
             busy = true;
         }
@@ -139,6 +142,8 @@ void PipelinedTeacher::handleTeacherMessage(cMessage *msg)
         if(firstTeacher())
         {
             newStudent();
+            student->setStudentID(studentCounter);
+            studentCounter++;
             askQuestion();
             busy = true;
         }
@@ -170,6 +175,8 @@ void PipelinedTeacher::initialize()
     if(firstTeacher())
     {
         newStudent();
+        student->setStudentID(studentCounter);
+        studentCounter++;
         askQuestion();
         busy = true;
     }
@@ -193,7 +200,7 @@ void PipelinedTeacher::handleMessage(cMessage *msg)
  */
 void PipelinedTeacher::finish()
 {
-    emit(idleTimeSignal, idleTimeTotal);
+    //emit(idleTimeSignal, idleTimeTotal);
 }
 
 

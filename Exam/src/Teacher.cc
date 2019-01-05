@@ -16,12 +16,13 @@ bool Teacher::examFinished(int questionNumber)
  Resets fields for each new student examined by the teacher,
  in this way we can reuse the same member student without creating a new one
 */
+/*
 void Teacher::clearStudent()
 {
     student->setAnswersNumber(0);
     student->setTotalAnswerTime(0);
 }
-
+*/
 
 /*
  Returns the value of the network parameter answerTimeDistribution
@@ -111,7 +112,7 @@ int Teacher::getTotalQuestionsNumber()
 void Teacher::newStudent()
 {
     student = new Student("Student");
-    //student->setStudentID(student->getTotalMessageCount());
+    student->setStudentID((int)student->getTotalMessageCount());
     //DEBUG
     EV << "New student number " << student->getId() << endl;
     //DEBUG
@@ -184,8 +185,7 @@ void Teacher::handleMessage(cMessage *msg)
        {
            Student *s = check_and_cast<Student*>(msg);
            emit(examFinishedSignal, s->getTotalAnswerTime());
-           emit(studentIDSignal, s->getId());
-           //clearStudent();
+           emit(studentIDSignal, s->getStudentID());
            delete s;
            newStudent();
        }

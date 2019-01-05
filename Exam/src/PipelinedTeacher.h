@@ -21,6 +21,7 @@ private:
         bool newIncomingStudent;
         simsignal_t idleTimeSignal, waitingTimeSignal;
         simtime_t idleTimeStart, idleTimeTotal;
+        int studentCounter;
         bool firstTeacher();
         bool lastTeacher();
         bool newStudentAvailable(cMessage *msg);
@@ -35,7 +36,7 @@ private:
         virtual void finish();
 
     public:
-        PipelinedTeacher() {busy = false; newIncomingStudent = false; idleTimeStart = 0; idleTimeTotal = 0;};
+        PipelinedTeacher() {busy = false; newIncomingStudent = false; idleTimeStart = 0; idleTimeTotal = 0; studentCounter = 0;};
         ~PipelinedTeacher() {cancelAndDelete(student);};
 };
 

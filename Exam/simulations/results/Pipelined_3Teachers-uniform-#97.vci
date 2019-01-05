@@ -1,0 +1,31 @@
+file 36160 1546682259                                           
+version 2
+run Pipelined_3Teachers-97-20190105-10:57:39-5452
+attr configname Pipelined_3Teachers
+attr datetime 20190105-10:57:39
+attr experiment Pipelined_3Teachers
+attr inifile ../simulations/omnetpp.ini
+attr iterationvars "$0=\"uniform\""
+attr iterationvarsf uniform-
+attr measurement "$0=\"uniform\""
+attr network PipelinedExamSession
+attr processid 5452
+attr repetition 97
+attr replication #97
+attr resultdir results
+attr runnumber 97
+attr seedset 97
+param **.teachersNumber 3
+param **.answerTimeDistribution "\"uniform\""
+param **.minUniform 300
+param **.maxUniform 900
+param **.scaleLognormal 6.2854
+param **.shapeLognormal 0.4724
+
+vector 0 PipelinedExamSession examinationTime:vector ETV
+attr source examFinished
+vector 1 PipelinedExamSession studentID:vector ETV
+attr source student
+0	817 20448 3129 7325 260228.263062424976 604617.523061251311 467 1423.9982017782 2600.0745432917 950394.03959638 1964771886.2852
+1	21265 14893 3129 7325 260228.263062424976 604617.523061251311 467 346 812 270393 165044805
+

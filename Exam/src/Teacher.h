@@ -36,7 +36,6 @@ class Teacher : public cSimpleModule
         void updateStudentState(cMessage *student);
         virtual void initialize();
         virtual void handleMessage(cMessage* msg);
-        //virtual void finish() {student->resetMessageCounters();};
 };
 
 #endif

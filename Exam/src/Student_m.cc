@@ -238,12 +238,12 @@ void Student::parsimUnpack(omnetpp::cCommBuffer *b)
     doParsimUnpacking(b,this->currentAnswerTime);
 }
 
-long Student::getStudentID() const
+int Student::getStudentID() const
 {
     return this->studentID;
 }
 
-void Student::setStudentID(long studentID)
+void Student::setStudentID(int studentID)
 {
     this->studentID = studentID;
 }
@@ -426,7 +426,7 @@ const char *StudentDescriptor::getFieldTypeString(int field) const
         field -= basedesc->getFieldCount();
     }
     static const char *fieldTypeStrings[] = {
-        "long",
+        "int",
         "simtime_t",
         "simtime_t",
         "simtime_t",
