@@ -22,7 +22,7 @@ bool PipelinedTeacher::lastTeacher()
 
 /*
  Returns true if the previous teacher has a new student ready to be sent
- (in this case he sent the "New student available" message)
+ (the received message is a "New student available" message)
 */
 bool PipelinedTeacher::newStudentAvailable(cMessage *msg)
 {
@@ -31,8 +31,8 @@ bool PipelinedTeacher::newStudentAvailable(cMessage *msg)
 
 
 /*
- Returns true if the following teacher isn't busy and is ready to receive a new student
- (in this case he sent the "Teacher no more busy" message)
+ Returns true if the next teacher isn't busy and is ready to receive a new student
+ (the received message is a "Teacher no more busy" message)
 */
 bool PipelinedTeacher::teacherNotBusy(cMessage *msg)
 {
@@ -48,8 +48,8 @@ void PipelinedTeacher::handleStudentResponse(cMessage *msg)
     updateStudentState(msg);
     student->setStartingWaitingTime(simTime());
 
-    idleTimeStart = simTime();  //initialized to count a possible idle time period that can occur if there isn't a new student to examine
-                                //or if is not possible to send immediately the student just examined to the next teacher
+    idleTimeStart = simTime();  //initialized to count a possible idle time period that can occur if there isn't a new student ready to be examined
+                                //or if it's not possible to send immediately the student just examined to the next teacher
     if(!lastTeacher())
     {
         cMessage *handshake = new cMessage("New student available");
@@ -57,18 +57,10 @@ void PipelinedTeacher::handleStudentResponse(cMessage *msg)
     }
     else
     {
-        //DEBUG
-        EV << student->getTotalAnswerTime() << endl;
-        //DEBUG
-
         //collect statistics
         emit(examFinishedSignal, student->getTotalAnswerTime() + student->getTotalWaitingTime());
-        //emit(waitingTimeSignal, student->getTotalWaitingTime());
+        emit(waitingTimeSignal, student->getTotalWaitingTime());
         emit(studentIDSignal, student->getStudentID());
-
-        //DEBUG
-        EV << "Student " << student->getId() << " deleted"  << endl;
-        //DEBUG
 
         delete student;
         student = NULL;
@@ -82,7 +74,7 @@ void PipelinedTeacher::handleStudentResponse(cMessage *msg)
         }
 
         //used to handle the situation with only one teacher (in this case he is both the first and the last of the pipeline)
-        //if the number of teacher is greater than one, this statement is not used any more
+        //if the number of teacher is greater than one, this statement is not used anymore
         if(firstTeacher())
         {
             newStudent();
@@ -115,15 +107,11 @@ void PipelinedTeacher::handleTeacherMessage(cMessage *msg)
     }
     else if(teacherNotBusy(msg))
     {
-        //DEBUG
-        EV << "Student " << student->getId()  << " sent to next teacher" << endl;
-        //DEBUG
-
         simtime_t currentTotalWaitingTime = student->getTotalWaitingTime();
         student->setTotalWaitingTime(currentTotalWaitingTime +  simTime() - student->getStartingWaitingTime());
 
         idleTimeTotal += simTime() - idleTimeStart;     //when the next colleague is no more busy,
-                                                        //the teacher can stop to wait and send to him the student
+                                                        //the teacher stops to wait and sends to him the student
         send(student, "nextTeacher$o");
         student = NULL;
         busy = false;
@@ -154,7 +142,7 @@ void PipelinedTeacher::handleTeacherMessage(cMessage *msg)
         askQuestion();
         busy = true;
 
-        idleTimeTotal += simTime() - idleTimeStart;     //the idle time is stopped because the teacher can start to examine the incoming student
+        idleTimeTotal += simTime() - idleTimeStart;     //the idle time is stopped because the teacher starts to examine the incoming student
     }
 }
 
@@ -190,17 +178,17 @@ void PipelinedTeacher::handleMessage(cMessage *msg)
     if(msg->isSelfMessage())
         handleStudentResponse(msg);         //handles a selfMessage, that is always a student's answer
     else
-        handleTeacherMessage(msg);          //handles communication between teachers and student exchanges
+        handleTeacherMessage(msg);          //handles communication between teachers and exchanges of students
 }
 
 
 /*
  The teachers idle time is emitted only at the end of the simulation.
- Other statistics are related to students and are emitted by the last teacher of the pipeline
+ Other statistics are related to students and are emitted only by the last teacher of the pipeline
  */
 void PipelinedTeacher::finish()
 {
-    //emit(idleTimeSignal, idleTimeTotal);
+    emit(idleTimeSignal, idleTimeTotal);
 }
 
 

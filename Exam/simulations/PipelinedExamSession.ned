@@ -14,7 +14,7 @@ network PipelinedExamSession
         @signal[examFinished](type = simtime_t);
         @statistic[examinationTime](source = "examFinished"; record = vector);
         @signal[student](type = int);
-        @statistic[studentID](source = "student"; record = vector, min, max);
+        @statistic[studentID](source = "student"; record = vector);
         @signal[idleTime](type = simtime_t);
         @statistic[teachersIdleTime](source = "idleTime"; record = vector); 
         @signal[waitingTime](type = simtime_t);

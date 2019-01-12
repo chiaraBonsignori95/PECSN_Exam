@@ -4,25 +4,13 @@ Define_Module(Teacher);
 
 /*
  questionNumber represents the i-th question asked by the teacher
- This function checks if a student answered to all questions
+ This function checks if a student has answered to all questions
 */
 bool Teacher::examFinished(int questionNumber)
 {
     return questionNumber == getTotalQuestionsNumber();
 }
 
-
-/*
- Resets fields for each new student examined by the teacher,
- in this way we can reuse the same member student without creating a new one
-*/
-/*
-void Teacher::clearStudent()
-{
-    student->setAnswersNumber(0);
-    student->setTotalAnswerTime(0);
-}
-*/
 
 /*
  Returns the value of the network parameter answerTimeDistribution
@@ -70,7 +58,7 @@ bool Teacher::isLognormal(const char* distribution)
 
 
 /*
-Returns the scale parameter for the Lognormal distribution (that is the mean of the Normal distribution)
+Returns the scale parameter for the lognormal distribution (that is the mean of the corresponding Normal distribution)
 */
 double Teacher::getScaleLognormal()
 {
@@ -79,7 +67,7 @@ double Teacher::getScaleLognormal()
 
 
 /*
-Returns the shape parameter for the Lognormal distribution (that is the standard deviation of the Normal distribution)
+Returns the shape parameter for the lognormal distribution (that is the standard deviation of the corresponding Normal distribution)
 */
 double Teacher::getShapeLognormal()
 {
@@ -107,21 +95,18 @@ int Teacher::getTotalQuestionsNumber()
 
 
 /*
- Creates a new student
+ Creates a new student and associates to him a unique ID
 */
 void Teacher::newStudent()
 {
     student = new Student("Student");
     student->setStudentID((int)student->getTotalMessageCount());
-    //DEBUG
-    EV << "New student number " << student->getId() << endl;
-    //DEBUG
 }
 
 
 /*
- Simulates the student's answer time according to the used distribution
- generating a new event for the teacher after the computed time
+ Simulates the student's answer time according to the used distribution and
+ schedules a new event for the teacher after this time
 */
 void Teacher::askQuestion()
 {
@@ -131,16 +116,8 @@ void Teacher::askQuestion()
     else if(isLognormal(getDistribution()))
         answerTime = lognormal(getScaleLognormal(), getShapeLognormal());
 
-    //DEBUG
-    //answerTime = 900; // debugging statistics
-    //DEBUG
-
     student->setCurrentAnswerTime(answerTime);
     scheduleAt(simTime() + answerTime, student);
-
-    //DEBUG
-    EV << "Question done to student  " << student->getId() << endl;
-    //DEBUG
 }
 
 
@@ -172,8 +149,8 @@ void Teacher::initialize()
 
 
 /*
- When the answer time elapsed student's fields are updated and a new question is asked.
- At the end of the n-th question, the student's fields are reset to simulate the new student's arrival
+ When the answer time elapses, updates student's fields and asks a new question.
+ At the end of the n-th question, deletes the student and simulates a new student's arrival
 */
 void Teacher::handleMessage(cMessage *msg)
 {

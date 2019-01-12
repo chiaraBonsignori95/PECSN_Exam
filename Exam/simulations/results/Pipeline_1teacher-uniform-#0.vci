@@ -1,0 +1,34 @@
+file 1821 1545210472                                            
+version 2
+run Pipeline_1teacher-0-20181219-10:07:49-1872
+attr configname Pipeline_1teacher
+attr datetime 20181219-10:07:49
+attr experiment Pipeline_1teacher
+attr inifile omnetpp.ini
+attr iterationvars "$0=\"uniform\""
+attr iterationvarsf uniform-
+attr measurement "$0=\"uniform\""
+attr network PipelinedExamSession
+attr processid 1872
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param **.teachersNumber 1
+param **.answerTimeDistribution "\"uniform\""
+param **.minUniform 300
+param **.maxUniform 1800
+param **.scaleLognormal 6.95654
+param **.shapeLognormal 0.65
+
+vector 0 PipelinedExamSession examinationTime:vector ETV
+attr source examFinished
+vector 1 PipelinedExamSession studentsWaitingTime:vector ETV
+attr source waitingTime
+vector 2 PipelinedExamSession teachersIdleTime:vector ETV
+attr source idleTime
+0	886 557 1 14 1123.220253456384 16749.859896535055 14 746.30190788303 1586.9184297742 16749.859896535 20949640.45585
+1	1443 362 1 14 1123.220253456384 16749.859896535055 14 0 0 0 0
+2	1805 14 15 15 18000 18000 1 0 0 0 0
+

@@ -7,12 +7,11 @@
 using namespace omnetpp;
 
 
-/***************************************************************************************
+/******************************************************************************************************
 
-PipelinedTeacher is the class that extends Teacher to model teacher's behaviour
-in "Pipelined" model.
+PipelinedTeacher is the class that extends Teacher to model teacher's behaviour in "Pipelined" scenario.
 
-****************************************************************************************/
+*******************************************************************************************************/
 
 class PipelinedTeacher : public Teacher
 {

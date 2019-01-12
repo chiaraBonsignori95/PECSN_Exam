@@ -1,0 +1,46 @@
+version 2
+run Parallel_1teacher-0-20181219-10:24:05-14504
+attr configname Parallel_1teacher
+attr datetime 20181219-10:24:05
+attr experiment Parallel_1teacher
+attr inifile omnetpp.ini
+attr iterationvars "$0=\"uniform\""
+attr iterationvarsf uniform-
+attr measurement "$0=\"uniform\""
+attr network ParallelExamSession
+attr processid 14504
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param **.teachersNumber 1
+param **.answerTimeDistribution "\"uniform\""
+param **.minUniform 300
+param **.maxUniform 1800
+param **.scaleLognormal 6.95654
+param **.shapeLognormal 0.65
+
+vector 0 ParallelExamSession examinationTime:vector ETV
+attr source examFinished
+0	1	900	900
+0	2	1800	900
+0	3	2700	900
+0	4	3600	900
+0	5	4500	900
+0	6	5400	900
+0	7	6300	900
+0	8	7200	900
+0	9	8100	900
+0	10	9000	900
+0	11	9900	900
+0	12	10800	900
+0	13	11700	900
+0	14	12600	900
+0	15	13500	900
+0	16	14400	900
+0	17	15300	900
+0	18	16200	900
+0	19	17100	900
+0	20	18000	900
+

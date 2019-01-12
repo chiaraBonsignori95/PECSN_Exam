@@ -7,17 +7,16 @@
 using namespace omnetpp;
 using namespace std;
 
-/**********************************************************************************************
+/**************************************************************************************************
 
-Teacher is the class that implements the teacher's behaviour in "One student per teacher" model.
+Teacher is the class that implements the teacher's behaviour in "One student per teacher" scenario.
 
-***********************************************************************************************/
+**************************************************************************************************/
 
 class Teacher : public cSimpleModule
 {
     private:
         bool examFinished(int questionNumber);
-        void clearStudent();
 
     protected:
         Student* student;
