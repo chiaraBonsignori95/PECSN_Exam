@@ -23,7 +23,8 @@
  * <pre>
  * packet Student
  * {
- *     int studentID;
+ *     int studentID;					//is unique for each student and is used in statistics to associate 
+ *     								//waitingTime and examinationTime to the corresponding student
  * 
  *     simtime_t totalAnswerTime;		//examination time
  * 
